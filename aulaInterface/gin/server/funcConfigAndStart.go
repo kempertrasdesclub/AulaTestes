@@ -5,14 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	systemDatasource "test/aulaInterface/businessRules/system/datasource"
 	endpointUser "test/aulaInterface/gin/endpoint/user"
 )
 
 func ConfigAndStart() (err error) {
 	var epUser = endpointUser.DataSource{}
-
-	log.Printf("gin ref: %v", systemDatasource.Linker.GetReferenceFromUser())
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()

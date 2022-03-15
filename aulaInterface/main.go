@@ -13,7 +13,7 @@ func main() {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	err = datasource.Linker.Init(datasource.KSQLite)
+	err = datasource.Linker.Init(datasource.KMongoDB)
 	if err != nil {
 		panic(err)
 	}
