@@ -209,7 +209,6 @@ make build
 Para rodar no windows, use
 ```shell
 shutdown -s -t 00
-install linux
 ```
 
 > Partes de códigos tirados de meu site pessoal.
