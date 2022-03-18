@@ -11,7 +11,7 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
-	"test/aulaInterface/businessRules/system/datasource"
+	"test/aulaInterface/businessRules/system/managerDatasource"
 	"test/aulaInterface/gin/server"
 	"time"
 )
@@ -39,7 +39,7 @@ var queryRemoveImageMongo string
 
 func main() {
 	var err error
-	var userDatasource datasource.Name
+	var userDatasource managerDatasource.Name
 
 	// formato do log
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
@@ -73,15 +73,15 @@ func main() {
 	// Define a fonte de dados para o módulo `User`, usado na demonstração.
 	switch querySelectDataSource {
 	case "f":
-		userDatasource = datasource.KFakeData
+		userDatasource = managerDatasource.KFakeData
 	case "s":
-		userDatasource = datasource.KSQLite
+		userDatasource = managerDatasource.KSQLite
 	case "m":
-		userDatasource = datasource.KMongoDB
+		userDatasource = managerDatasource.KMongoDB
 	}
 
 	// inicializa a fonte de dados (SQLite ou MongoDB)
-	err = datasource.Linker.Init(userDatasource)
+	err = managerDatasource.Linker.Init(userDatasource)
 	if err != nil {
 		panic(err)
 	}

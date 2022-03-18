@@ -1,11 +1,9 @@
-package datasource
+package managerDatasource
 
 import (
 	"errors"
 	"github.com/helmutkemper/util"
-	"plugin"
 	"test/aulaInterface/constants"
-	"test/aulaInterface/interfaces"
 	jwtverify "test/aulaInterface/toModule/JWT"
 	"test/aulaInterface/toModule/passwordHash"
 	"test/aulaInterface/toModule/uID"
@@ -13,8 +11,9 @@ import (
 
 // Init Inicializa o datasource escolhido
 //   name: type Name
-//     KSQLite: Inicializa o banco de dados como sendo o SQLite
-//     KMongoDB: Inicializa o banco de dados como sendo o MongoDB
+//     KFakeData: Inicializa o banco de dados como sendo o objeto com dados aleatórios.
+//     KSQLite:   Inicializa o banco de dados como sendo o SQLite
+//     KMongoDB:  Inicializa o banco de dados como sendo o MongoDB
 func (e *RefList) Init(name Name) (err error) {
 
 	var userPluginPath string
@@ -29,7 +28,7 @@ func (e *RefList) Init(name Name) (err error) {
 
 	// Inicializa o gerador/verificador de JWT
 	e.Jwt = &jwtverify.JwtVerify{}
-	err = e.Jwt.NewAlgorithm([]byte("colocar em constants")) //fixme
+	err = e.Jwt.NewAlgorithm([]byte(kSecretKey))
 	if err != nil {
 		util.TraceToLog()
 		return
@@ -39,21 +38,21 @@ func (e *RefList) Init(name Name) (err error) {
 	switch name {
 
 	case KFakeData:
-		userPluginPath, err = util.FileFindInTree("user.fake.so")
+		userPluginPath, err = util.FileFindInTree(kPluginUserFakeData)
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
 	case KMongoDB:
-		userPluginPath, err = util.FileFindInTree("user.mongodb.so")
+		userPluginPath, err = util.FileFindInTree(kPluginUserMongoDB)
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
 	case KSQLite:
-		userPluginPath, err = util.FileFindInTree("user.sqlite.so")
+		userPluginPath, err = util.FileFindInTree(kPluginUserSQLite)
 		if err != nil {
 			util.TraceToLog()
 			return
@@ -61,39 +60,6 @@ func (e *RefList) Init(name Name) (err error) {
 	}
 
 	err = e.installUserByPlugin(userPluginPath)
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
-	return
-}
-
-func (e *RefList) installUserByPlugin(pluginPlath string) (err error) {
-	var ok bool
-	var user *plugin.Plugin
-	var userSymbol plugin.Symbol
-
-	user, err = plugin.Open(pluginPlath)
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
-	userSymbol, err = user.Lookup("User")
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
-	e.User, ok = userSymbol.(interfaces.InterfaceUser)
-	if ok == false {
-		err = errors.New("plugin user conversion into interface user has an error")
-		util.TraceToLog()
-		return
-	}
-
-	_, err = e.User.New()
 	if err != nil {
 		util.TraceToLog()
 		return

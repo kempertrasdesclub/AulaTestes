@@ -17,8 +17,8 @@ type InterfaceUser interface {
 }
 ```
 
-É uma `interface` de nome `User` feita para se comunicar com qualquer objeto que tenha as funções
-`SetName(string)` e `SetMail(string)` implementadas, como no exemplo abaixo.
+O código acima é uma `interface` de nome `User` feita para se comunicar com qualquer objeto que tenha 
+as funções `SetName(string)` e `SetMail(string)` implementadas, como no exemplo abaixo.
 
 ```go
 type User struct {
@@ -72,17 +72,19 @@ Imagine um `MVP`, um produto mínimo viável, onde o pessoal de frontend necessi
 o mais rápido possível, o seu gestor necessita apresentar algo a direção da empresa e você necessita 
 fazer um projeto descente para ter sossego e curtir a vida.
 
-Nesse ponto, o Go oferece duas opções, criar um objeto, `type struct` dentro do código, ou um binário
-externo, carregável em tempo de execução. Quase um `DLL` windows.
+Nesse ponto, o Go oferece duas opções, criar um objeto, um `type` que não seja `interface{}`, dentro 
+do código, ou um binário externo, carregável em tempo de execução. Quase uma `DLL` windows.
 
 **Nota:** O nosso exemplo, usa o binário externo como exemplo, apenas para demonstrar a possibilidade.
 
 ## Explicação do código
 
+O código de exemplo foi tirado do meu um código maior, site pessoal. 
+
 Arquivo `aulaInterface/main.go`
 
 A linha `err = datasource.Linker.Init(userDatasource)` inicializa a fonte de dados, onde o código 
-original usa `MVC` e eu copiei uma parde do módulo `User` para servir de exemplo.
+original usa `MVC`, e eu copiei uma parde do módulo `User` para servir de exemplo.
 
 Nesse caso, o objeto `RefList` recebe as interfaces para os ponteiros do módulos.
 
@@ -97,6 +99,13 @@ type RefList struct {
 
 Já a adição de um novo módulo pode ser feita simplesmente com uma cópia da linha 
 `userPluginPath, err = util.FileFindInTree("user.fake.so")`.
+
+### Regra de ouro
+
+Módulos específicos fazem coisas específicas e somente aquilo que ele se dispõe a fazer. Essa é a 
+regra da responsabilidade única.
+
+Caso um módulo necessite integrar vários módulos, os mesmos devem conter o termo `manager` no nome.
 
 ## Explicando Plugins
 

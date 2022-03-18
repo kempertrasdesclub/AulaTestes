@@ -7,6 +7,17 @@ import (
 	"test/aulaInterface/constants"
 )
 
+// VerifyPasswordByEmail
+//
+// Português:
+//
+// Verifica se a senha recebida pelo frontend confere com o hash da senha salva na fonte de dados.
+//   Entrada:
+//     mail: e-mail do usuário;
+//     password: senha do usuário.
+//   Saída:
+//     match: true quando a senha confere;
+//     err: objeto de erro padrão do go.
 func (e *BusinessRules) VerifyPasswordByEmail(mail, password string) (match bool, err error) {
 	var hash []byte
 	var passwordFromDatasource string

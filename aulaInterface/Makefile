@@ -3,7 +3,7 @@ GO ?= go
 .PHONY: help
 ## Este comando de ajuda
 help:
-	@printf "Opções de comandos\nmake commando\n\n"
+	@printf "Opções de comandos\n\n"
 	@awk '/^[a-zA-Z\-\_0-9]+:/ { \
 		helpMessage = match(lastLine, /^## (.*)/); \
 		if (helpMessage) { \
@@ -55,14 +55,15 @@ build:
 .PHONY: clean-sqlite
 ## Apaga o banco de dados SQLite
 clean-sqlite:
-	@rm ./database.sqlite
+	@if [ -f ./database.sqlite ]; then rm ./database.sqlite; fi
 
 .PHONY: clean-binaries
 ## Limpa os arquivos binários
 clean-binaries:
-	@rm ./externalPlugin/user.sqlite.so
-	@rm ./externalPlugin/user.mongodb.so
-	@rm ./main.so
+	@if [ -f ./externalPlugin/user.sqlite.so ]; then rm ./externalPlugin/user.sqlite.so; fi
+	@if [ -f ./externalPlugin/user.mongodb.so ]; then rm ./externalPlugin/user.mongodb.so; fi
+	@if [ -f ./externalPlugin/user.fake.so ]; then rm ./externalPlugin/user.fake.so; fi
+	@if [ -f ./main.so ]; then rm ./main.so; fi
 
 .PHONY: clean-all
 ## Limpa os arquivos de teste

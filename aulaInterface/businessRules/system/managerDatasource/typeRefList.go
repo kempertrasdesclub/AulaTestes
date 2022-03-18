@@ -1,10 +1,14 @@
-package datasource
+package managerDatasource
 
 import (
 	"test/aulaInterface/interfaces"
 )
 
-// RefList (Português): Recebe todos os ponteiros de datasource
+// RefList
+//
+// Português:
+//
+// Recebe todos os ponteiros de datasource.
 type RefList struct {
 	User     interfaces.InterfaceUser     `json:"-"`
 	Password interfaces.InterfacePassword `json:"-"`
