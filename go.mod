@@ -3,6 +3,7 @@ module test
 go 1.17
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.15.0
 	github.com/gbrlsnchs/jwt/v3 v3.0.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/google/uuid v1.3.0

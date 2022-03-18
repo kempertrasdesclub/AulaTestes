@@ -6,4 +6,7 @@ const (
 
 	// KMongoDB (Português): Define o datasource como sendo o MongoDB
 	KMongoDB
+
+	// KFakeData (Português): Define o datasource como sendo dados aleatórios
+	KFakeData
 )

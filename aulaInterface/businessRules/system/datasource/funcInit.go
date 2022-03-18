@@ -11,12 +11,13 @@ import (
 	"test/aulaInterface/toModule/uID"
 )
 
-// Init (Português): Inicializa o datasource escolhido
-//   name: tyme Name
+// Init Inicializa o datasource escolhido
+//   name: type Name
 //     KSQLite: Inicializa o banco de dados como sendo o SQLite
+//     KMongoDB: Inicializa o banco de dados como sendo o MongoDB
 func (e *RefList) Init(name Name) (err error) {
 
-	var path string
+	var userPluginPath string
 
 	err = errors.New(constants.KErrorInicializeDataSourceFirst)
 
@@ -37,33 +38,32 @@ func (e *RefList) Init(name Name) (err error) {
 	// Inicializa o banco de dados
 	switch name {
 
-	case KMongoDB:
-
-		// user
-		path, err = util.FileFindInTree("user.mongodb.so")
+	case KFakeData:
+		userPluginPath, err = util.FileFindInTree("user.fake.so")
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
-		err = e.installUserByPlugin(path)
+	case KMongoDB:
+		userPluginPath, err = util.FileFindInTree("user.mongodb.so")
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
 	case KSQLite:
-		path, err = util.FileFindInTree("user.sqlite.so")
+		userPluginPath, err = util.FileFindInTree("user.sqlite.so")
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
+	}
 
-		err = e.installUserByPlugin(path)
-		if err != nil {
-			util.TraceToLog()
-			return
-		}
+	err = e.installUserByPlugin(userPluginPath)
+	if err != nil {
+		util.TraceToLog()
+		return
 	}
 
 	return
