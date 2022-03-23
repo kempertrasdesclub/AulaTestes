@@ -108,3 +108,6 @@ dist
 
 # sqlite database
 *.sqlite
+
+# arquivo de teste
+data.test.json.*

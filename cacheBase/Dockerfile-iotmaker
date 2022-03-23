@@ -1,0 +1,8 @@
+FROM golang:1.17-alpine as builder
+RUN mkdir -p /root/.ssh/ && \
+    apk update && \
+    apk add openssh && \
+    apk add --no-cache build-base && \
+    apk add --no-cache alpine-sdk && \
+    rm -rf /var/cache/apk/*
+ARG CGO_ENABLED=0
