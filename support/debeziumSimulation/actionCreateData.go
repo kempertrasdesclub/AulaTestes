@@ -8,16 +8,18 @@ func (e *DebeziumSimulation) actionCreateData() {
 	//log.Printf("actionCreateData()")
 
 	var after interface{}
-	var line FileLineFormat
-	for _, line = range e.create {
-		after = line.Data
+	_, after, err = e.GetCreate()
+	if err != nil {
+		util.TraceToLog()
+		e.ErrChan <- err
+		return
+	}
 
-		err = e.SendOnNewData(after)
-		if err != nil {
-			util.TraceToLog()
-			e.ErrChan <- err
-			return
-		}
+	err = e.SendOnNewData(after)
+	if err != nil {
+		util.TraceToLog()
+		e.ErrChan <- err
+		return
 	}
 
 	return

@@ -80,27 +80,18 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	var debezium = &debeziumSimulation.DebeziumSimulation{}
+	debezium.EnableOnStartData(10)
 	debezium.SetData(&dTest)
 	debezium.SetMessagingSystem(&messageSystem)
-	debezium.SetMessagingTopicOnStart("stocksMessage")
-	debezium.SetMessagingTopicOnCreate("stocksMessage")
-	debezium.SetMessagingTopicOnUpdate("stocksMessage")
-	debezium.SetMessagingTopicOnDelete("stocksMessage")
+	debezium.SetMessagingTopic("stocksMessage")
 	debezium.SetTimers(
-		0,
+		5*time.Millisecond,
 		50*time.Millisecond,
-		1*time.Millisecond,
-		130*time.Millisecond,
-		300*time.Millisecond,
+		70*time.Millisecond,
+		100*time.Millisecond,
 	)
 
-	err = debezium.Populate(100, 0.5, 0.5)
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
-
-	err = debezium.Init()
+	err = debezium.Init(false, "tradersclub", "simulation")
 	if err != nil {
 		util.TraceToLog()
 		panic(err)

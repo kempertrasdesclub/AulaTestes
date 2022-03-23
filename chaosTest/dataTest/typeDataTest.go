@@ -3,7 +3,6 @@ package dataTest
 import (
 	"encoding/json"
 	"github.com/brianvoe/gofakeit/v6"
-	"test/support/interfaces"
 )
 
 type DataTest struct {
@@ -11,7 +10,7 @@ type DataTest struct {
 	Name string
 }
 
-func (e *DataTest) GetID() (ID string, err error) {
+func (e *DataTest) GetID() (ID interface{}, err error) {
 	ID = e.Id
 	return
 }
@@ -22,10 +21,6 @@ func (e *DataTest) getNextId() (id string) {
 
 func (e *DataTest) Get() (data interface{}) {
 	return *e
-}
-
-func (e *DataTest) GetRef() (ref interfaces.DataToSimulateInterface) {
-	return e
 }
 
 func (e *DataTest) Populate() (err error) {

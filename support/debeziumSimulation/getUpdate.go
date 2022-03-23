@@ -35,7 +35,9 @@ func (e *DebeziumSimulation) GetUpdate() (id, before, after interface{}, err err
 
 	after = e.realDataPointer.Get()
 
-	e.update[id.(string)] = FileLineFormat{Id: id.(string), Data: after}
+	if e.enableSaveData == true {
+		e.update[id] = FileLineFormat{Id: id, Data: after}
+	}
 
 	return
 }

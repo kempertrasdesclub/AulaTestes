@@ -26,7 +26,9 @@ type DebeziumSimulation struct {
 	// delete: lista de todos os dados apagados
 	delete map[interface{}]FileLineFormat
 
-	sendOnPopulateData     bool
+	enableSaveData bool
+
+	sendOnPopulateData     int
 	messagingSystem        interfaces.MessagingSystemInterface
 	messagingTopicOnStart  string
 	messagingTopicOnCreate string
@@ -41,7 +43,6 @@ type DebeziumSimulation struct {
 	sendOnCreateDelay time.Duration
 	sendOnUpdateDelay time.Duration
 	sendOnDeleteDelay time.Duration
-	sendOnReadDelay   time.Duration
 
 	ErrChan chan error `json:"-"`
 

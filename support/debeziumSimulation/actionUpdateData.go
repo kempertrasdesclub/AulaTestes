@@ -7,15 +7,13 @@ func (e *DebeziumSimulation) actionUpdateData() {
 
 	var after interface{}
 	var before interface{}
-	var key interface{}
-	var line FileLineFormat
-	for key, line = range e.update {
-		after = line.Data
-		break
-	}
-	delete(e.delete, key)
 
-	before = e.create[key].Data
+	_, before, after, err = e.GetUpdate()
+	if err != nil {
+		util.TraceToLog()
+		e.ErrChan <- err
+		return
+	}
 
 	err = e.SendOnUpdateData(after, before)
 	if err != nil {

@@ -33,6 +33,9 @@ func (e *DebeziumSimulation) GetCreate() (id, after interface{}, err error) {
 
 	after = e.realDataPointer.Get()
 
-	e.create[id] = FileLineFormat{Id: id, Data: after}
+	if e.enableSaveData == true {
+		e.create[id] = FileLineFormat{Id: id, Data: after}
+	}
+
 	return
 }

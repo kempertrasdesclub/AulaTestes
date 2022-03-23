@@ -24,6 +24,9 @@ func (e *DebeziumSimulation) GetDelete() (id, before interface{}, err error) {
 
 	before = e.realDataPointer.Get()
 
-	e.delete[id.(string)] = FileLineFormat{Id: id.(string), Data: before}
+	if e.enableSaveData == true {
+		e.delete[id] = FileLineFormat{Id: id, Data: before}
+	}
+
 	return
 }

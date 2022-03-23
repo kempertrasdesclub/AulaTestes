@@ -1,17 +1,21 @@
 package debeziumSimulation
 
 import (
-	"github.com/helmutkemper/util"
 	"log"
 	"time"
 )
 
-// Init (português): Inicializa a simulação
+// Init
+//
+// Inicializa a simulação
+//
 //   Entrada:
-//     length: quantidade de dados simulados
+//     enableSaveData: habilita o salvamento de dados para uso posterior;
+//     dbName: nome do banco de dados usado na simulação;
+//     tableName: nome da tabela usada na simulação.
 //   Saída:
-//     err: Objeto padrão de erro
-func (e *DebeziumSimulation) Init() (err error) {
+//     err: Objeto padrão de erro do go.
+func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string) (err error) {
 	e.ErrChan = make(chan error)
 
 	// Dados fantasia para MySQL
@@ -20,9 +24,9 @@ func (e *DebeziumSimulation) Init() (err error) {
 	e.Source.Name = "mysql"
 	e.Source.TsMs = 1622826301925
 	e.Source.Snapshot = true
-	e.Source.Db = "tradersclub"
+	e.Source.Db = dbName
 	e.Source.Sequence = nil
-	e.Source.Table = "Idea"
+	e.Source.Table = tableName
 	e.Source.ServerId = 0
 	e.Source.Gtid = nil
 	e.Source.File = "mysql-bin.000008"
@@ -31,21 +35,16 @@ func (e *DebeziumSimulation) Init() (err error) {
 	e.Source.Thread = nil
 	e.Source.Query = nil
 
+	e.enableSaveData = enableSaveData
+
 	log.Print("início: populando dados")
 	start := time.Now()
 
-	// fixme: os dados são criados todos de uma vez nessa abordagem e isto é um erro
-	if e.sendOnPopulateData == true {
-		for _, after := range e.create {
-			err = e.SendOnPopulateData(after)
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
+	for i := 0; i != e.sendOnPopulateData; i += 1 {
+		e.actionCreateData()
 
-			if e.sendOnStartDelay != 0 {
-				time.Sleep(e.sendOnStartDelay)
-			}
+		if e.sendOnStartDelay != 0 {
+			time.Sleep(e.sendOnStartDelay)
 		}
 	}
 
@@ -61,7 +60,6 @@ func (e *DebeziumSimulation) Init() (err error) {
 		for {
 			select {
 			case <-e.sendOnCreateTicker.C:
-				//fixme: isto é um bug
 				go e.actionCreateData()
 
 			case <-e.sendOnUpdateTicker.C:
