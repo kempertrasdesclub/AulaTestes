@@ -43,7 +43,7 @@ func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string)
 	start := time.Now()
 
 	for i := 0; i != e.sendOnPopulateData; i += 1 {
-		e.actionCreateData()
+		e.actionReadData()
 
 		if e.sendOnStartDelay != 0 {
 			time.Sleep(e.sendOnStartDelay)

@@ -15,9 +15,9 @@ import (
 //   Saída:
 //     err: Objeto de erro padrão do go.
 func (e *DebeziumSimulation) sendOnSimulationEnd() (err error) {
-	if e.messagingTopicOnStart == "" {
+	if e.messagingTopicOnTerminate == "" {
 		util.TraceToLog()
-		err = errors.New("messaging topic on start is not set")
+		err = errors.New("messaging topic on terminate is not set")
 		return
 	}
 

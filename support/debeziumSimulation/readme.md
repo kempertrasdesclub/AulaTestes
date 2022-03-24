@@ -140,7 +140,7 @@ Os principais pontos da mensagem são:
 	respectivos nomes do banco de dados e da table;
   * **before:** dado antes da alteração;
   * **after:** dado depois da alteração;
-  * **op:** operação realizada, pode ser `c` create; `u` update; `d` delete e `z` fim da simulação.
+  * **op:** operação realizada, pode ser `c` create; `r` read; u` update; `d` delete e `z` fim da simulação.
 
 Veja exemplos para o dado criado acima.
 
