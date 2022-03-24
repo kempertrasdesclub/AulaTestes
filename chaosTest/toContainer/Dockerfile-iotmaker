@@ -2,9 +2,6 @@
 # (pt) primeira etapa do processo
 FROM cachechaostest:latest as builder
 #
-# (en) content from file /root/.gitconfig
-# (pt) conteúdo do arquivo /root/.gitconfig
-ARG GITCONFIG_FILE
 # (en) content from file /root/.ssh/know_hosts
 # (pt) conteúdo do arquivo /root/.ssh/know_hosts
 ARG KNOWN_HOSTS_FILE
@@ -14,6 +11,9 @@ ARG SSH_ID_RSA_FILE
 # (en) path from private repository. example: github.com/helmutkemper
 # (pt) caminho do repositório privado. exemplo: github.com/helmutkemper
 ARG GIT_PRIVATE_REPO
+# (en) content from file /root/.gitconfig
+# (pt) conteúdo do arquivo /root/.gitconfig
+ARG GITCONFIG_FILE
 # (en) creates the .ssh directory within the root directory
 # (pt) cria o diretório .ssh dentro do diretório root
 RUN mkdir -p /root/.ssh/ && \

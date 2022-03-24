@@ -240,6 +240,35 @@ Delete:
 }
 ```
 
+Fim de simulação:
+
+```json
+{
+  "source": {
+    "version": "1.5.0.Final",
+    "connector": "mysql",
+    "name": "mysql",
+    "ts_ms": 1622826301925,
+    "snapshot": true,
+    "db": "tradersclub",
+    "sequence": null,
+    "table": "simulation",
+    "server_id": 0,
+    "gtid": null,
+    "file": "mysql-bin.000008",
+    "pos": 82625,
+    "row": 0,
+    "thread": null,
+    "query": null
+  },
+  "before": null,
+  "after": null,
+  "op": "z",
+  "ts_ms": 1648135688,
+  "transaction": null
+}
+```
+
 ## Sistema de mensageria
 
 Caso você necessite refazer o sistema mensageria para algum outro diferente do [nats](https://nats.io/),
