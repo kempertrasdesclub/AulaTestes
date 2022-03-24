@@ -62,7 +62,7 @@ func TestLocalDevOps(t *testing.T) {
 		}
 	}
 
-	var dTest = dataTest.DataTest{}
+	var dataSimulation = dataTest.DataTest{}
 	var messageSystem = messagingSystemNats.MessagingSystemNats{}
 	_, err = messageSystem.New("nats://0.0.0.0:4222")
 	if err != nil {
@@ -81,7 +81,7 @@ func TestLocalDevOps(t *testing.T) {
 
 	var debezium = &debeziumSimulation.DebeziumSimulation{}
 	debezium.EnableOnStartData(10)
-	debezium.SetData(&dTest)
+	debezium.SetData(&dataSimulation)
 	debezium.SetMessagingSystem(&messageSystem)
 	debezium.SetMessagingTopic("stocksMessage")
 	debezium.SetTimers(
