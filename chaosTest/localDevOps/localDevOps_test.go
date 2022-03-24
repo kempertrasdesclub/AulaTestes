@@ -5,6 +5,7 @@ import (
 	dockerBuilderNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	"github.com/helmutkemper/util"
 	"log"
+	"sync"
 	"test/chaosTest/dataTest"
 	"test/support/debeziumSimulation"
 	"test/support/messagingSystemNats"
@@ -80,7 +81,7 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	var debezium = &debeziumSimulation.DebeziumSimulation{}
-	debezium.EnableOnStartData(10)
+	debezium.EnableOnStartData(1)
 	debezium.SetData(&dataSimulation)
 	debezium.SetMessagingSystem(&messageSystem)
 	debezium.SetMessagingTopic("stocksMessage")
@@ -100,7 +101,13 @@ func TestLocalDevOps(t *testing.T) {
 
 	ch := debezium.GetTerminationChannel()
 	<-ch
-	messageSystem.Publish("stocksMessage", []byte("{\"op\":\"end\"}"))
-	time.Sleep(2 * time.Second)
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		time.Sleep(30 * time.Second)
+		wg.Done()
+	}()
+	wg.Wait()
 	log.Print("fim!")
 }

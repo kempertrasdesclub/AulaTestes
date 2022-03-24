@@ -129,6 +129,117 @@ func TestLocalDevOps(t *testing.T) {
 }
 ```
 
+## Envio de mensagens
+
+Caso você não esteja familiarizado com debezium, ele envia mensagens quando o dado contido no banco de 
+dados muda.
+
+Os principais pontos da mensagem são:
+
+  * **source:** dados do banco de dados, onde você deve ficar de olho no campos **bd** e **table** com os 
+	respectivos nomes do banco de dados e da table;
+  * **before:** dado antes da alteração;
+  * **after:** dado depois da alteração;
+  * **op:** operação realizada, pode ser `r` read; `c` create; `u` update; `d` delete e `x` fim da simulação.
+
+Veja exemplos para o dado criado acima.
+
+Crate:
+```json
+{
+  "source": {
+    "version": "1.5.0.Final",
+    "connector": "mysql",
+    "name": "mysql",
+    "ts_ms": 1622826301925,
+    "snapshot": true,
+    "db": "tradersclub",
+    "sequence": null,
+    "table": "simulation",
+    "server_id": 0,
+    "gtid": null,
+    "file": "mysql-bin.000008",
+    "pos": 82625,
+    "row": 0,
+    "thread": null,
+    "query": null
+  },
+  "before": null,
+  "after": {
+    "Id": "93cec220-8278-49c2-86bd-994641d239b8",
+    "Name": "Adelle Hamill"
+  },
+  "op": "c",
+  "ts_ms": 1648133772,
+  "transaction": null
+}
+```
+
+Update:
+```json
+{
+  "source": {
+    "version": "1.5.0.Final",
+    "connector": "mysql",
+    "name": "mysql",
+    "ts_ms": 1622826301925,
+    "snapshot": true,
+    "db": "tradersclub",
+    "sequence": null,
+    "table": "simulation",
+    "server_id": 0,
+    "gtid": null,
+    "file": "mysql-bin.000008",
+    "pos": 82625,
+    "row": 0,
+    "thread": null,
+    "query": null
+  },
+  "before": {
+    "Id": "e3112e32-c819-4097-9ef6-43a31b2f6a5d",
+    "Name": "Obie Windler"
+  },
+  "after": {
+    "Id": "e3112e32-c819-4097-9ef6-43a31b2f6a5d",
+    "Name": "Karolann Leannon"
+  },
+  "op": "u",
+  "ts_ms": 1648133772,
+  "transaction": null
+}
+```
+
+Delete:
+```json
+{
+  "source": {
+    "version": "1.5.0.Final",
+    "connector": "mysql",
+    "name": "mysql",
+    "ts_ms": 1622826301925,
+    "snapshot": true,
+    "db": "tradersclub",
+    "sequence": null,
+    "table": "simulation",
+    "server_id": 0,
+    "gtid": null,
+    "file": "mysql-bin.000008",
+    "pos": 82625,
+    "row": 0,
+    "thread": null,
+    "query": null
+  },
+  "before": {
+    "Id": "4f3d5501-aa95-4756-a5c0-dfa8807f5361",
+    "Name": "Leonie Kerluke"
+  },
+  "after": null,
+  "op": "d",
+  "ts_ms": 1648133774,
+  "transaction": null
+}
+```
+
 ## Sistema de mensageria
 
 Caso você necessite refazer o sistema mensageria para algum outro diferente do [nats](https://nats.io/),
