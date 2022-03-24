@@ -4,6 +4,15 @@ import (
 	"encoding/json"
 )
 
+// processLine
+//
+// Processa a uma única linha do arquivo de dados e preenche a memória.
+//
+//   Entrada:
+//     line: Linha do arquivo de dados na forma de byte.
+//
+//   Saída:
+//     err: Objeto padrão de erro do go.
 func (e *DebeziumSimulation) processLine(line []byte) (err error) {
 	if e.create == nil {
 		e.create = make(map[interface{}]FileLineFormat)

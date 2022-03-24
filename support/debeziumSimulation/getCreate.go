@@ -4,12 +4,15 @@ import (
 	"errors"
 )
 
-// GetCreate (português): Retorna o dado preenchido para ser enviado ao Debezium.
+// getCreate
+//
+// Retorna o dado preenchido para ser enviado ao Debezium.
+//
 //   Saída:
-//     id: ID do banco de dados
-//     after: Dado após o evento
-//     err: Objeto de erro padrão
-func (e *DebeziumSimulation) GetCreate() (id, after interface{}, err error) {
+//     id: ID do banco de dados;
+//     after: Dado após o evento;
+//     err: Objeto de erro padrão.
+func (e *DebeziumSimulation) getCreate() (id, after interface{}, err error) {
 	if e.realDataPointer == nil {
 		err = errors.New("use SetData() function first")
 		return

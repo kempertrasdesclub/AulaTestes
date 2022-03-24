@@ -2,7 +2,10 @@ package debeziumSimulation
 
 import "errors"
 
-// GetCreateList (português): Retorna a lista de dados a serem criados
+// GetCreateList
+//
+// Retorna a lista de dados a serem criados
+//
 //   Entrada:
 //     list: map[string]struct{Id string `json:"id"`, Name string `json:"name"`}
 func (e *DebeziumSimulation) GetCreateList() (list interface{}, err error) {

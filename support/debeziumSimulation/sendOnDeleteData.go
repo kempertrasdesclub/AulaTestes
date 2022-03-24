@@ -7,7 +7,16 @@ import (
 	"time"
 )
 
-func (e *DebeziumSimulation) SendOnDeleteData(before interface{}) (err error) {
+// sendOnDeleteData
+//
+// Envia o dado apagado pelo sistema de mensageria.
+//
+//   Entrada:
+//     before: dado antes de ser apagado;
+//
+//   Saída:
+//     err: Objeto de erro padrão do go.
+func (e *DebeziumSimulation) sendOnDeleteData(before interface{}) (err error) {
 	if e.messagingTopicOnStart == "" {
 		util.TraceToLog()
 		err = errors.New("messaging topic on start is not set")

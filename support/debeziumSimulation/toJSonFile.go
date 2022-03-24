@@ -6,6 +6,15 @@ import (
 	"os"
 )
 
+// ToJSonFile
+//
+// Salva os dados criados em um arquivo de dados.
+//
+//   Entrada:
+//     path: caminho do arquivo a ser salvo.
+//
+//   Saída:
+//     err: Objeto de erro padrão do go.
 func (e *DebeziumSimulation) ToJSonFile(path string) (err error) {
 	var file *os.File
 

@@ -4,13 +4,16 @@ import (
 	"errors"
 )
 
-// GetUpdate (português): Retorna o dado com novos valores após a atualização
+// getUpdate
+//
+// Retorna o dado com novos valores após a atualização
+//
 //   Saída:
-//     id: ID do banco de dados
-//     before: Dado antes do evento
-//     after: Dado depois do evento
-//     err: Objeto de erro padrão
-func (e *DebeziumSimulation) GetUpdate() (id, before, after interface{}, err error) {
+//     id: ID do banco de dados;
+//     before: Dado antes do evento;
+//     after: Dado depois do evento;
+//     err: Objeto de erro padrão.
+func (e *DebeziumSimulation) getUpdate() (id, before, after interface{}, err error) {
 	if e.realDataPointer == nil {
 		err = errors.New("use SetData() function first")
 		return

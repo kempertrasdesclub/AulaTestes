@@ -5,6 +5,16 @@ import (
 	"os"
 )
 
+// createToFile
+//
+// Converte um bloco de dados salvos em json e salva no arquivo.
+//
+//   Entrada:
+//     file: Ponteiro do arquivo a ser salvo;
+//     list: Ponteiro para o bloco de dados a ser salvo;
+//     action: c - data created; u - data updated; d - data deleted.
+//   Saída:
+//     err: Objeto de erro padrão do go
 func (e *DebeziumSimulation) createToFile(file *os.File, list *map[interface{}]FileLineFormat, action string) (err error) {
 	var dataToJSon []byte
 	for _, data := range *list {

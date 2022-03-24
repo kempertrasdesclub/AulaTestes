@@ -7,7 +7,17 @@ import (
 	"time"
 )
 
-func (e *DebeziumSimulation) SendOnUpdateData(after, before interface{}) (err error) {
+// sendOnUpdateData
+//
+// Envia o dado atualizado pelo sistema de mensageria.
+//
+//   Entrada:
+//     after: dado após ser atualizado;
+//     before: dado antes de ser atualizado;
+//
+//   Saída:
+//     err: Objeto de erro padrão do go.
+func (e *DebeziumSimulation) sendOnUpdateData(after, before interface{}) (err error) {
 	if e.messagingTopicOnStart == "" {
 		util.TraceToLog()
 		err = errors.New("messaging topic on start is not set")

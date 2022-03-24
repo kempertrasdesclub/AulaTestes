@@ -2,7 +2,10 @@ package debeziumSimulation
 
 import "errors"
 
-// GetCurrentId (português): Retorna o ID atual do banco de dados
+// GetCurrentId
+//
+// Retorna o ID atual do banco de dados.
+//
 //   Saída:
 //     id: ID atual do banco de dados
 func (e *DebeziumSimulation) GetCurrentId() (id interface{}, err error) {
@@ -10,10 +13,10 @@ func (e *DebeziumSimulation) GetCurrentId() (id interface{}, err error) {
 		err = errors.New("use SetData() function first")
 		return
 	}
-
+	
 	if e.create == nil {
 		return
 	}
-
+	
 	return e.id, err
 }

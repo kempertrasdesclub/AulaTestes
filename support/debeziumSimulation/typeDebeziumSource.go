@@ -1,7 +1,6 @@
 package debeziumSimulation
 
-// debeziumSource objeto usado para simular o funcionamento do Debezium e recebe dados
-// falsos
+// debeziumSource objeto usado para simular o funcionamento do Debezium e recebe dados falsos
 type debeziumSource struct {
 	Version   string      `json:"version"`
 	Connector string      `json:"connector"`

@@ -35,13 +35,7 @@ func TestDebeziumSimulation_SetMessagingSystem(t *testing.T) {
 		300*time.Millisecond,
 	)
 
-	err = debezium.Populate(100, 0.5, 0.5)
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
-
-	err = debezium.Init()
+	err = debezium.Init(true, "db", "table")
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
@@ -54,11 +48,6 @@ func TestFile(t *testing.T) {
 
 	var debeziumWriter = &DebeziumSimulation{}
 	debeziumWriter.SetData(&dTest)
-
-	err = debeziumWriter.Populate(32, 0.5, 0.5)
-	if err != nil {
-		t.FailNow()
-	}
 
 	err = debeziumWriter.ToJSonFile("./data.test.json.txt")
 	if err != nil {

@@ -13,9 +13,11 @@ import (
 //     enableSaveData: habilita o salvamento de dados para uso posterior;
 //     dbName: nome do banco de dados usado na simulação;
 //     tableName: nome da tabela usada na simulação.
+//
 //   Saída:
 //     err: Objeto padrão de erro do go.
 func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string) (err error) {
+	e.TerminationChan = make(chan struct{})
 	e.ErrChan = make(chan error)
 
 	// Dados fantasia para MySQL
@@ -55,10 +57,18 @@ func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string)
 	e.sendOnCreateTicker = time.NewTicker(e.sendOnCreateDelay)
 	e.sendOnUpdateTicker = time.NewTicker(e.sendOnUpdateDelay)
 	e.sendOnDeleteTicker = time.NewTicker(e.sendOnDeleteDelay)
+	e.sendTestProcessTerminationTimer = time.NewTimer(e.sendTestProcessTerminationDelay)
 
 	go func(e *DebeziumSimulation) {
 		for {
 			select {
+			case <-e.sendTestProcessTerminationTimer.C:
+				e.sendOnCreateTicker.Stop()
+				e.sendOnUpdateTicker.Stop()
+				e.sendOnDeleteTicker.Stop()
+
+				e.TerminationChan <- struct{}{}
+
 			case <-e.sendOnCreateTicker.C:
 				go e.actionCreateData()
 

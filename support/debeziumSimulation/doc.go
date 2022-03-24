@@ -1,6 +1,6 @@
 // Package debeziumSimulation
 //
-// Este pacote contém o dado a ser usado na simulação de funcionamento da memória.
+// Este pacote faz uma simulação do funcionamento do CDC/Debezium com sistema de mensageria.
 //
 // A ideia básica desse módulo é conter um struct com a representação da tabela do
 // banco de dados, além das funções responsáveis por simular os dados atualizados pelo usuário.
@@ -12,7 +12,7 @@
 // causadas pelo usuário.
 //
 // Uma boa prática de simulação é lembrar que em algumas tabelas, campos booleanos são
-// definidos como int e enviados na forma numérica pelo Debezium, necessitando de correção
+// definidos como inteiro e enviados na forma numérica pelo Debezium, necessitando de correção
 // na recepção do dado, para que o mesmo se torne um booleano.
 // Por isto, é recomendado criar a função `func(e *xx)UnmarshalJSON(data []byte) error {}`
 // para formatar o dado recebido corretamente.

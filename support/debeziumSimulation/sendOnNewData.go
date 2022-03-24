@@ -4,10 +4,20 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/helmutkemper/util"
+	"log"
 	"time"
 )
 
-func (e *DebeziumSimulation) SendOnNewData(after interface{}) (err error) {
+// sendOnNewData
+//
+// Envia um dado criado pelo sistema de mensageria.
+//
+//   Entrada:
+//     after: dado criado;
+//
+//   Saída:
+//     err: Objeto de erro padrão do go.
+func (e *DebeziumSimulation) sendOnNewData(after interface{}) (err error) {
 	if e.messagingTopicOnStart == "" {
 		util.TraceToLog()
 		err = errors.New("messaging topic on start is not set")
@@ -30,6 +40,7 @@ func (e *DebeziumSimulation) SendOnNewData(after interface{}) (err error) {
 	dataToSend, err = json.Marshal(e)
 	if err != nil {
 		util.TraceToLog()
+		log.Printf("json.Marshal(e).error: %v", err.Error())
 		return
 	}
 

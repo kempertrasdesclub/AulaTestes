@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/hashicorp/memberlist"
 	"github.com/helmutkemper/util"
 	"log"
 	"net"
+	"os"
 	"time"
 	"toContainer/messagingSystemNats"
 )
@@ -15,6 +17,23 @@ const (
 	KMemberListUpdateInterval = 5 * time.Second
 	KCachePort                = ":11211"
 )
+
+type DebeziumSource struct {
+	Db    string `json:"db"`
+	Table string `json:"table"`
+}
+
+type DebeziumData struct {
+	Id   string `json:"Id"`
+	Name string `json:"Name"`
+}
+
+type Debezium struct {
+	Source DebeziumSource `json:"source"`
+	Before DebeziumData   `json:"before"`
+	After  DebeziumData   `json:"after"`
+	Op     string         `json:"op"`
+}
 
 var list *memberlist.Memberlist
 var cacheClient *memcache.Client
@@ -27,6 +46,7 @@ var cacheClient *memcache.Client
 // batem.
 func main() {
 	var err error
+	var close = make(chan struct{})
 	var updateMemberListTicker *time.Ticker
 
 	list, err = memberlist.Create(memberlist.DefaultLocalConfig())
@@ -85,7 +105,28 @@ func main() {
 	}
 
 	err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
-		log.Printf("nats: %s", data)
+		var debezium Debezium
+		err = json.Unmarshal(data, &debezium)
+		if err != nil {
+			util.TraceToLog()
+			panic(err)
+		}
+
+		if debezium.Op == "end" {
+			close <- struct{}{}
+		}
+
+		if debezium.Op == "c" {
+			var data []byte
+			data, _ = json.Marshal(&debezium.After)
+			_ = cacheClient.Set(
+				&memcache.Item{
+					Key:   debezium.After.Id,
+					Value: data,
+				},
+			)
+		}
+
 		return
 	})
 	if err != nil {
@@ -93,7 +134,9 @@ func main() {
 		panic(err)
 	}
 
-	time.Sleep(5 * time.Minute)
+	<-close
+	log.Print("fim!")
+	os.Exit(0)
 }
 
 func updateMemberListCache() {

@@ -85,10 +85,11 @@ func TestLocalDevOps(t *testing.T) {
 	debezium.SetMessagingSystem(&messageSystem)
 	debezium.SetMessagingTopic("stocksMessage")
 	debezium.SetTimers(
-		5*time.Millisecond,
 		50*time.Millisecond,
-		70*time.Millisecond,
-		100*time.Millisecond,
+		500*time.Millisecond,
+		700*time.Millisecond,
+		1000*time.Millisecond,
+		5*time.Second,
 	)
 
 	err = debezium.Init(false, "tradersclub", "simulation")
@@ -97,5 +98,9 @@ func TestLocalDevOps(t *testing.T) {
 		panic(err)
 	}
 
-	time.Sleep(10 * time.Minute)
+	ch := debezium.GetTerminationChannel()
+	<-ch
+	messageSystem.Publish("stocksMessage", []byte("{\"op\":\"end\"}"))
+	time.Sleep(2 * time.Second)
+	log.Print("fim!")
 }

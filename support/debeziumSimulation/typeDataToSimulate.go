@@ -9,8 +9,8 @@ import (
 //
 // Objeto usado como memória na hora de criar dados alterados pelo usuário.
 //
-// Nota: O dado representando a tabela do banco de dados fica contido em
-//       RealDataToSimulate.
+//   Nota:
+//     * O dado representando a tabela do banco de dados fica contido em RealDataToSimulate.
 type DebeziumSimulation struct {
 	realDataPointer interfaces.DataToSimulateInterface
 
@@ -44,7 +44,11 @@ type DebeziumSimulation struct {
 	sendOnUpdateDelay time.Duration
 	sendOnDeleteDelay time.Duration
 
-	ErrChan chan error `json:"-"`
+	sendTestProcessTerminationTimer *time.Timer
+	sendTestProcessTerminationDelay time.Duration
+
+	ErrChan         chan error    `json:"-"`
+	TerminationChan chan struct{} `json:"-"`
 
 	Source      debeziumSource `json:"source"`
 	Before      interface{}    `json:"before"`
