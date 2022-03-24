@@ -105,7 +105,7 @@ func TestLocalDevOps(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		time.Sleep(30 * time.Second)
+		time.Sleep(10 * time.Second)
 		wg.Done()
 	}()
 	wg.Wait()

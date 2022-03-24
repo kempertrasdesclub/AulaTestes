@@ -9,7 +9,10 @@ package debeziumSimulation
 //
 //   Nota:
 //     * Use as funções SetMessagingTopicOnCreate(), SetMessagingTopicOnDelete(),
-//       SetMessagingTopicOnStart() e SetMessagingTopicOnUpdate() para definir tópicos específicos.
+//       SetMessagingTopicOnStart(), SetMessagingTopicOnUpdate() e SetMessagingTopicOnTerminate() para
+//       definir tópicos específicos.
+//     * Use a função SetMessagingTopic() para definir todos os tópicos simultaneamente, e em seguida
+//       use as demais funções para definir um tópico específico.
 func (e *DebeziumSimulation) SetMessagingTopicOnUpdate(topic string) {
 	e.messagingTopicOnUpdate = topic
 }

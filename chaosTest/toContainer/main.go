@@ -112,7 +112,7 @@ func main() {
 			panic(err)
 		}
 
-		if debezium.Op == "end" {
+		if debezium.Op == "z" {
 			close <- struct{}{}
 		}
 

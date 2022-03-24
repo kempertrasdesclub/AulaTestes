@@ -8,6 +8,12 @@ import (
 	"time"
 )
 
+// sendOnSimulationEnd
+//
+// Envia o dado indicativo de fim de simulação.
+//
+//   Saída:
+//     err: Objeto de erro padrão do go.
 func (e *DebeziumSimulation) sendOnSimulationEnd() (err error) {
 	if e.messagingTopicOnStart == "" {
 		util.TraceToLog()
@@ -35,7 +41,7 @@ func (e *DebeziumSimulation) sendOnSimulationEnd() (err error) {
 		return
 	}
 
-	err = e.messagingSystem.Publish(e.messagingTopicOnCreate, dataToSend)
+	err = e.messagingSystem.Publish(e.messagingTopicOnTerminate, dataToSend)
 	if err != nil {
 		util.TraceToLog()
 	}

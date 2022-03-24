@@ -63,12 +63,14 @@ func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string)
 		for {
 			select {
 			case <-e.sendTestProcessTerminationTimer.C:
+				e.sendTestProcessTerminationTimer.Stop()
 				e.sendOnCreateTicker.Stop()
 				e.sendOnUpdateTicker.Stop()
 				e.sendOnDeleteTicker.Stop()
 
-				e.actionSimulationEnd()
+				go e.actionSimulationEnd()
 				e.TerminationChan <- struct{}{}
+				return
 
 			case <-e.sendOnCreateTicker.C:
 				go e.actionCreateData()

@@ -28,12 +28,13 @@ type DebeziumSimulation struct {
 
 	enableSaveData bool
 
-	sendOnPopulateData     int
-	messagingSystem        interfaces.MessagingSystemInterface
-	messagingTopicOnStart  string
-	messagingTopicOnCreate string
-	messagingTopicOnUpdate string
-	messagingTopicOnDelete string
+	sendOnPopulateData        int
+	messagingSystem           interfaces.MessagingSystemInterface
+	messagingTopicOnStart     string
+	messagingTopicOnCreate    string
+	messagingTopicOnUpdate    string
+	messagingTopicOnDelete    string
+	messagingTopicOnTerminate string
 
 	sendOnCreateTicker *time.Ticker
 	sendOnUpdateTicker *time.Ticker
