@@ -13,6 +13,7 @@ func dockerSimulationInstall(
 	netDocker *dockerBuilderNetwork.ContainerBuilderNetwork,
 	simulation *dockerBuilder.ContainerBuilder,
 	index int64,
+	memoryInputPath string,
 ) (
 	err error,
 ) {
@@ -22,7 +23,7 @@ func dockerSimulationInstall(
 	log.Printf("Instalação do container de simulação, índice %v: início", indexAsString)
 
 	simulation.SetImageCacheName("cachechaostest:latest")
-	simulation.SetImageExpirationTime(30 * time.Minute)
+	simulation.SetImageExpirationTime(30 * time.Minute) //fixme: definir no arquivo de teste
 	// Imprime a saída padrão do container na saída padrão do golang
 	simulation.SetPrintBuildOnStrOut()
 	// Habilita o uso da imagem cache:latest
@@ -41,6 +42,13 @@ func dockerSimulationInstall(
 	simulation.SetGitPathPrivateRepository("github.com/tradersclub")
 	// Copias as credenciais do usuário para o container
 	err = simulation.SetPrivateRepositoryAutoConfig()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("Error: %v", err.Error())
+		return
+	}
+
+	err = simulation.AddFileOrFolderToLinkBetweenConputerHostAndContainer(memoryInputPath, "/memory_container")
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("Error: %v", err.Error())

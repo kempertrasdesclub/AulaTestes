@@ -2,9 +2,6 @@
 # (pt) primeira etapa do processo
 FROM cachechaostest:latest as builder
 #
-# (en) path from private repository. example: github.com/helmutkemper
-# (pt) caminho do repositório privado. exemplo: github.com/helmutkemper
-ARG GIT_PRIVATE_REPO
 # (en) content from file /root/.gitconfig
 # (pt) conteúdo do arquivo /root/.gitconfig
 ARG GITCONFIG_FILE
@@ -14,6 +11,9 @@ ARG KNOWN_HOSTS_FILE
 # (en) content from file /root/.ssh/id_rsa
 # (pt) conteúdo do arquivo /root/.ssh/id_rsa
 ARG SSH_ID_RSA_FILE
+# (en) path from private repository. example: github.com/helmutkemper
+# (pt) caminho do repositório privado. exemplo: github.com/helmutkemper
+ARG GIT_PRIVATE_REPO
 # (en) creates the .ssh directory within the root directory
 # (pt) cria o diretório .ssh dentro do diretório root
 RUN mkdir -p /root/.ssh/ && \
@@ -74,4 +74,5 @@ FROM scratch
 COPY --from=builder /app/main .
 # (en) execute your project
 # (pt) executa o seu projeto
+VOLUME /memory_container
 CMD ["/main"]

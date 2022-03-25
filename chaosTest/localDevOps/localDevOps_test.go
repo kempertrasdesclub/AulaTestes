@@ -1,10 +1,14 @@
 package localDevOps
 
 import (
+	"errors"
 	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
 	dockerBuilderNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	"github.com/helmutkemper/util"
+	"io/fs"
 	"log"
+	"os"
+	"strconv"
 	"sync"
 	"test/chaosTest/dataTest"
 	"test/support/debeziumSimulation"
@@ -54,8 +58,28 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	for i := int64(0); i != 2; i += 1 {
+
+		var suffix = strconv.FormatInt(i, 10)
+		var memoryPath = "./memory/container_" + suffix
+		_ = os.MkdirAll(memoryPath, fs.ModePerm)
+
+		var fileInfo fs.FileInfo
+		fileInfo, err = os.Stat(memoryPath)
+		if err != nil {
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
+			t.FailNow()
+		}
+
+		if fileInfo.IsDir() == false {
+			err = errors.New("directory to archive memory data not created")
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
+			t.FailNow()
+		}
+
 		var simulation = &dockerBuilder.ContainerBuilder{}
-		err = dockerSimulationInstall(netDocker, simulation, i)
+		err = dockerSimulationInstall(netDocker, simulation, i, memoryPath)
 		if err != nil {
 			util.TraceToLog()
 			log.Printf("error: %v", err.Error())

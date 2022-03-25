@@ -1,4 +1,4 @@
-module test
+module github.com/kempertrasdesclub/AulaTestes
 
 go 1.17
 
