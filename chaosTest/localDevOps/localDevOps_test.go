@@ -68,6 +68,7 @@ func TestLocalDevOps(t *testing.T) {
 	_, err = messageSystem.New("nats://0.0.0.0:4222")
 	if err != nil {
 		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
@@ -77,7 +78,8 @@ func TestLocalDevOps(t *testing.T) {
 	})
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
 	}
 
 	var debezium = &debeziumSimulation.DebeziumSimulation{}
@@ -93,10 +95,11 @@ func TestLocalDevOps(t *testing.T) {
 		5*time.Second,
 	)
 
-	err = debezium.Init(false, "tradersclub", "simulation")
+	err = debezium.Init(true, "tradersclub", "simulation")
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
 	}
 
 	ch := debezium.GetTerminationChannel()
@@ -109,5 +112,20 @@ func TestLocalDevOps(t *testing.T) {
 		wg.Done()
 	}()
 	wg.Wait()
+
+	err = debezium.ToJSonFile("data.file.json")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
+	}
+
+	err = debezium.CompareJSonFile("data.file.json")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
+	}
+
 	log.Print("fim!")
 }
