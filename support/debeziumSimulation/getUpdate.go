@@ -15,12 +15,12 @@ import (
 //     err: Objeto de erro padrão.
 func (e *DebeziumSimulation) getUpdate() (id, before, after interface{}, err error) {
 	if e.realDataPointer == nil {
-		err = errors.New("use SetData() function first")
+		err = errors.New(KErrorUseSetDataFunctionFirst)
 		return
 	}
 
 	if e.create == nil {
-		err = errors.New("use Populate() function first")
+		err = errors.New(KErrorUseSetDataFunctionFirst)
 		return
 	}
 

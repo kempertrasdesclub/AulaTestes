@@ -12,7 +12,7 @@ import "errors"
 //     err: Objeto de erro padrão;
 func (e *DebeziumSimulation) getDelete() (id, before interface{}, err error) {
 	if e.realDataPointer == nil {
-		err = errors.New("use SetData() function first")
+		err = errors.New(KErrorUseSetDataFunctionFirst)
 		return
 	}
 

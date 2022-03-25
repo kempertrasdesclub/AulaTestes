@@ -20,13 +20,13 @@ import (
 func (e *DebeziumSimulation) sendOnUpdateData(after, before interface{}) (err error) {
 	if e.messagingTopicOnUpdate == "" {
 		util.TraceToLog()
-		err = errors.New("messaging topic on update is not set")
+		err = errors.New(KErrorMessagingTopicOnUpdateIsNotSet)
 		return
 	}
 
 	if e.messagingSystem == nil {
 		util.TraceToLog()
-		err = errors.New("messaging interface is not set")
+		err = errors.New(KErrorMessagingTopicOnStartIsNotSet)
 		return
 	}
 
@@ -34,7 +34,7 @@ func (e *DebeziumSimulation) sendOnUpdateData(after, before interface{}) (err er
 
 	e.Before = before
 	e.After = after
-	e.Operation = "u"
+	e.Operation = KOperationUpdate
 	e.EventDate = time.Now().Unix()
 
 	dataToSend, err = json.Marshal(e)

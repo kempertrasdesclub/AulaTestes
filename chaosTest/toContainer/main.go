@@ -8,7 +8,6 @@ import (
 	"github.com/helmutkemper/util"
 	"log"
 	"net"
-	"os"
 	"time"
 	"toContainer/messagingSystemNats"
 )
@@ -46,12 +45,14 @@ var cacheClient *memcache.Client
 // batem.
 func main() {
 	var err error
-	var close = make(chan struct{})
+	var endOfDataStream = make(chan struct{})
 	var updateMemberListTicker *time.Ticker
 
 	list, err = memberlist.Create(memberlist.DefaultLocalConfig())
 	if err != nil {
-		panic("Failed to create memberlist: " + err.Error())
+		util.TraceToLog()
+		log.Printf("bug: memberlist.Create().error: %v", err.Error())
+		return
 	}
 
 	// Join an existing cluster by specifying at least one known member.
@@ -76,7 +77,9 @@ func main() {
 	}
 	_, err = list.Join([]string{ip[0].String()})
 	if err != nil {
-		panic("Failed to join cluster: " + err.Error())
+		util.TraceToLog()
+		log.Printf("bug: list.Join().error: %v", err.Error())
+		return
 	}
 
 	// Ask for members of the cluster
@@ -101,42 +104,86 @@ func main() {
 	_, err = messageSystem.New("nats://10.0.0.2:4222")
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		log.Printf("bug: messageSystem.New().error: %v", err.Error())
+		return
 	}
 
-	err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
-		var debezium Debezium
-		err = json.Unmarshal(data, &debezium)
-		if err != nil {
-			util.TraceToLog()
-			panic(err)
-		}
+	err = messageSystem.Subscribe(
+		"stocksMessage",
+		func(subject string, data []byte) (err error) {
+			var debezium Debezium
+			err = json.Unmarshal(data, &debezium)
+			if err != nil {
+				util.TraceToLog()
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("bug: json.Unmarshal().error: %v", err.Error())
+					return
+				}
+			}
 
-		if debezium.Op == "z" {
-			close <- struct{}{}
-		}
-
-		if debezium.Op == "c" {
-			var data []byte
-			data, _ = json.Marshal(&debezium.After)
-			_ = cacheClient.Set(
-				&memcache.Item{
-					Key:   debezium.After.Id,
-					Value: data,
-				},
-			)
-		}
-
-		return
-	})
+			switch debezium.Op {
+			case "c":
+				err = cacheClient.Set(
+					&memcache.Item{
+						Key:   debezium.After.Id,
+						Value: data,
+					},
+				)
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("bug: cacheClient.Set().error: %v", err.Error())
+					return
+				}
+			case "r":
+				err = cacheClient.Set(
+					&memcache.Item{
+						Key:   debezium.After.Id,
+						Value: data,
+					},
+				)
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("bug: cacheClient.Set().error: %v", err.Error())
+					return
+				}
+			case "u":
+				err = cacheClient.Set(
+					&memcache.Item{
+						Key:   debezium.After.Id,
+						Value: data,
+					},
+				)
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("bug: cacheClient.Set().error: %v", err.Error())
+					return
+				}
+			case "d":
+				err = cacheClient.Set(
+					&memcache.Item{
+						Key:   debezium.After.Id,
+						Value: data,
+					},
+				)
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("bug: cacheClient.Set().error: %v", err.Error())
+					return
+				}
+			case "z":
+				endOfDataStream <- struct{}{}
+			}
+			return
+		},
+	)
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
-	<-close
-	log.Print("fim!")
-	os.Exit(0)
+	<-endOfDataStream
+
 }
 
 func updateMemberListCache() {

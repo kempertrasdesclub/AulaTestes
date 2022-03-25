@@ -17,13 +17,13 @@ import (
 func (e *DebeziumSimulation) sendOnSimulationEnd() (err error) {
 	if e.messagingTopicOnTerminate == "" {
 		util.TraceToLog()
-		err = errors.New("messaging topic on terminate is not set")
+		err = errors.New(KErrorMessagingTopicOnTerminateIsNotSet)
 		return
 	}
 
 	if e.messagingSystem == nil {
 		util.TraceToLog()
-		err = errors.New("messaging interface is not set")
+		err = errors.New(KErrorMessagingTopicOnStartIsNotSet)
 		return
 	}
 
@@ -31,7 +31,7 @@ func (e *DebeziumSimulation) sendOnSimulationEnd() (err error) {
 
 	e.Before = nil
 	e.After = nil
-	e.Operation = "z"
+	e.Operation = KOperationTerminate
 	e.EventDate = time.Now().Unix()
 
 	dataToSend, err = json.Marshal(e)

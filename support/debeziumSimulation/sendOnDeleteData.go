@@ -19,13 +19,13 @@ import (
 func (e *DebeziumSimulation) sendOnDeleteData(before interface{}) (err error) {
 	if e.messagingTopicOnDelete == "" {
 		util.TraceToLog()
-		err = errors.New("messaging topic on delete is not set")
+		err = errors.New(KErrorMessagingTopicOnDeleteIsNotSet)
 		return
 	}
 
 	if e.messagingSystem == nil {
 		util.TraceToLog()
-		err = errors.New("messaging interface is not set")
+		err = errors.New(KErrorMessagingInterfaceIsNotSet)
 		return
 	}
 
@@ -33,7 +33,7 @@ func (e *DebeziumSimulation) sendOnDeleteData(before interface{}) (err error) {
 
 	e.Before = before
 	e.After = nil
-	e.Operation = "d"
+	e.Operation = KOperationDelete
 	e.EventDate = time.Now().Unix()
 
 	dataToSend, err = json.Marshal(e)

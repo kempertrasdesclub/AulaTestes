@@ -10,7 +10,7 @@ import "errors"
 //     list: map[string]struct{Id string `json:"id"`, Name string `json:"name"`}
 func (e *DebeziumSimulation) GetCreateList() (list interface{}, err error) {
 	if e.realDataPointer == nil {
-		err = errors.New("use SetData() function first")
+		err = errors.New(KErrorUseSetDataFunctionFirst)
 		return
 	}
 
