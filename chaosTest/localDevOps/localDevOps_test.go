@@ -58,9 +58,9 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	for i := int64(0); i != 2; i += 1 {
-
 		var suffix = strconv.FormatInt(i, 10)
-		var memoryPath = "./memory/container_" + suffix
+
+		var memoryPath = "./localDevOps/memory/container_" + suffix
 		_ = os.MkdirAll(memoryPath, fs.ModePerm)
 
 		var fileInfo fs.FileInfo

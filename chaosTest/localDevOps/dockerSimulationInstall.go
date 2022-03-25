@@ -47,7 +47,7 @@ func dockerSimulationInstall(
 		log.Printf("Error: %v", err.Error())
 		return
 	}
-
+	log.Printf("memoryInputPath: %v", memoryInputPath)
 	err = simulation.AddFileOrFolderToLinkBetweenConputerHostAndContainer(memoryInputPath, "/memory_container")
 	if err != nil {
 		util.TraceToLog()
