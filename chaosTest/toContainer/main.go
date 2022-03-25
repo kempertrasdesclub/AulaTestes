@@ -8,8 +8,11 @@ import (
 	"github.com/helmutkemper/util"
 	"log"
 	"net"
+	"sync"
 	"time"
 	"toContainer/messagingSystemNats"
+
+	"github.com/kempertrasdesclub/AulaTestes/support/debeziumSimulation"
 )
 
 const (
@@ -179,11 +182,53 @@ func main() {
 	)
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		log.Printf("bug: messageSystem.Subscribe().error: %v", err.Error())
 	}
 
 	<-endOfDataStream
 
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		time.Sleep(20 * time.Second)
+	}()
+	wg.Wait()
+
+	var debezium = debeziumSimulation.DebeziumSimulation{}
+	err = debezium.FromJSonFile("/memory_container/data.file.json")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("bug: debezium.FromJSonFile().error: %v", err.Error())
+	}
+
+	var fileData map[interface{}]debeziumSimulation.FileLineFormat
+	fileData, err = debezium.GetAllCreate()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("bug: debezium.GetAllCreate().error: %v", err.Error())
+	}
+
+	for key := range fileData {
+		_, err = cacheClient.Get(key.(string))
+		if err != nil {
+			util.TraceToLog()
+			log.Printf("bug: cacheClient.Get().error: %v", err.Error())
+		}
+	}
+
+	fileData, err = debezium.GetAllUpdate()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("bug: debezium.GetAllCreate().error: %v", err.Error())
+	}
+
+	for key := range fileData {
+		_, err = cacheClient.Get(key.(string))
+		if err != nil {
+			util.TraceToLog()
+			log.Printf("bug: cacheClient.Get().error: %v", err.Error())
+		}
+	}
 }
 
 func updateMemberListCache() {

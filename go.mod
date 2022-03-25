@@ -1,6 +1,6 @@
 module github.com/kempertrasdesclub/AulaTestes
 
-go 1.17
+go 1.15
 
 require (
 	github.com/allegro/bigcache/v3 v3.0.2
