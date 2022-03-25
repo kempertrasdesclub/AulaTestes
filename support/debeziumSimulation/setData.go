@@ -1,6 +1,8 @@
 package debeziumSimulation
 
-import "test/support/interfaces"
+import (
+	"github.com/kempertrasdesclub/AulaTestes/support/interfaces"
+)
 
 // SetData
 //

@@ -1,6 +1,6 @@
 package messagingSystemNats
 
-import "test/support/commonTypes"
+import "github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 
 // SetReport (Português): Invoca uma função periodicamente para informar o status da
 // conexão.

@@ -1,7 +1,7 @@
 package debeziumSimulation
 
 import (
-	"test/support/interfaces"
+	"github.com/kempertrasdesclub/AulaTestes/support/interfaces"
 	"time"
 )
 

@@ -1,9 +1,9 @@
 package messagingSystemNats
 
 import (
+	"github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 	"github.com/nats-io/nats.go"
 	"sync"
-	"test/support/commonTypes"
 	"time"
 )
 

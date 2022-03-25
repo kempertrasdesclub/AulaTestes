@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-	"test/support/commonTypes"
+	"github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 	"time"
 )
 

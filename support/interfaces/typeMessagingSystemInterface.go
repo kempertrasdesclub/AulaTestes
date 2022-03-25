@@ -1,6 +1,6 @@
 package interfaces
 
-import "test/support/commonTypes"
+import "github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 
 type MessagingSystemInterface interface {
 

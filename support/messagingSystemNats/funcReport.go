@@ -1,8 +1,8 @@
 package messagingSystemNats
 
 import (
+	"github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 	"github.com/nats-io/nats.go"
-	"test/support/commonTypes"
 )
 
 // report (português): Traduz o estado da conexão no Nats.

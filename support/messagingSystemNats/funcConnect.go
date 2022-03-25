@@ -2,8 +2,8 @@ package messagingSystemNats
 
 import (
 	"errors"
+	"github.com/kempertrasdesclub/AulaTestes/support/commonTypes"
 	"github.com/nats-io/nats.go"
-	"test/support/commonTypes"
 	"time"
 )
 
