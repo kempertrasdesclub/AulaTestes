@@ -34,8 +34,9 @@ func dockerNatsDownloadAndInstall(
 
 	//natsDocker.SetImageBuildOptionsMemory(4 * dockerBuilder.KMegaByte)
 
-	// Você pode expor a porta 4222 para o fora da rede
+	// Você pode expor a porta 4222 e 6222 para o fora da rede
 	natsDocker.AddPortToExpose("4222")
+	natsDocker.AddPortToExpose("6222")
 
 	// Você pode trocar uma porta 4222 para 4200 e a expor para fora da rede
 	//natsDocker.AddPortToChange("4222", "4200")

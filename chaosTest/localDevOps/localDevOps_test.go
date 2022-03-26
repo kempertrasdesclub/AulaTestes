@@ -24,6 +24,9 @@ func TestLocalDevOps(t *testing.T) {
 	// Remove os elementos docker do teste anterior
 	dockerBuilder.SaGarbageCollector()
 
+	// Remove o arquivo de dump de memória.
+	_ = os.Remove("data.file.json")
+
 	// Remove os elementos docker ao final do teste
 	//defer dockerBuilder.SaGarbageCollector()
 
@@ -89,7 +92,7 @@ func TestLocalDevOps(t *testing.T) {
 
 	var dataSimulation = dataTest.DataTest{}
 	var messageSystem = messagingSystemNats.MessagingSystemNats{}
-	_, err = messageSystem.New("nats://0.0.0.0:4222")
+	_, err = messageSystem.New("nats://10.0.0.2:4222")
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("error: %v", err.Error())
@@ -137,18 +140,25 @@ func TestLocalDevOps(t *testing.T) {
 	}()
 	wg.Wait()
 
-	err = debezium.ToJSonFile("data.file.json")
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("error: %v", err.Error())
-		t.FailNow()
-	}
+	for i := int64(0); i != 2; i += 1 {
+		var suffix = strconv.FormatInt(i, 10)
+		var memoryPath = "./localDevOps/memory/container_" + suffix
 
-	err = debezium.CompareJSonFile("data.file.json")
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("error: %v", err.Error())
-		t.FailNow()
+		for {
+			_, err = os.Stat(memoryPath + "/data.file.json")
+			if err == nil {
+				break
+			}
+
+			time.Sleep(1 * time.Second)
+		}
+
+		err = debezium.CompareJSonFile(memoryPath + "/data.file.json")
+		if err != nil {
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
+			t.FailNow()
+		}
 	}
 
 	log.Print("fim!")
