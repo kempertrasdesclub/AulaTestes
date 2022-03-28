@@ -71,6 +71,8 @@ func dockerNatsDownloadAndInstall(
 		return
 	}
 
+	time.Sleep(5 * time.Second)
+
 	log.Print("instalação do container nats: fim")
 	return
 }

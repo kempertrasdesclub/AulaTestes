@@ -68,8 +68,10 @@ func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string)
 				e.sendOnUpdateTicker.Stop()
 				e.sendOnDeleteTicker.Stop()
 
-				go e.actionSimulationEnd()
+				e.actionSimulationEnd()
 				e.TerminationChan <- struct{}{}
+				log.Printf("-------------------------------------------------------------------------------------------------------------------------")
+
 				return
 
 			case <-e.sendOnCreateTicker.C:
