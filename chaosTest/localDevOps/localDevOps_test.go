@@ -124,15 +124,15 @@ func TestLocalDevOps(t *testing.T) {
 		t.FailNow()
 	}
 
-	//err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
-	//	log.Printf("nats: %s", data)
-	//	return
-	//})
-	//if err != nil {
-	//	util.TraceToLog()
-	//	log.Printf("error: %v", err.Error())
-	//	t.FailNow()
-	//}
+	err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
+		log.Printf("nats: %s", data)
+		return
+	})
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
+	}
 
 	var debezium = &debeziumSimulation.DebeziumSimulation{}
 	debezium.SetData(&dataSimulation)
