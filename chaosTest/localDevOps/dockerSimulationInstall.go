@@ -100,7 +100,7 @@ func dockerSimulationInstall(
 	// English: Defines a time window used to start chaos testing after container initialized
 	//
 	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
-	simulation.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
+	simulation.SetTimeToStartChaosOnChaosScene(60*time.Second, 90*time.Second)
 
 	// English: Sets a time window used to release container restart after the container has been initialized
 	//
