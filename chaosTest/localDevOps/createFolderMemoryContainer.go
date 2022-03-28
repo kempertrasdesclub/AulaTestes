@@ -28,8 +28,7 @@ func createFolderMemoryContainer(reference string, index int64) (dirPath string,
 	}
 
 	dirPath = path.Dir(dirPath)
-	_ = os.Mkdir(dirPath+"/memory", fs.ModePerm)
-	_ = os.Mkdir(dirPath+"/memory/container_"+indexAsString, fs.ModePerm)
+	_ = os.MkdirAll(dirPath+"/memory/container_"+indexAsString, fs.ModePerm)
 
 	var info fs.FileInfo
 	info, err = os.Stat(dirPath + "/memory/container_" + indexAsString)
