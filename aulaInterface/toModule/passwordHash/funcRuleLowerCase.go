@@ -3,8 +3,8 @@ package passwordHash
 import (
 	"bytes"
 	"errors"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 	"log"
-	"test/aulaInterface/constants"
 )
 
 func (e *Password) ruleLowerCase(password []byte) (err error) {

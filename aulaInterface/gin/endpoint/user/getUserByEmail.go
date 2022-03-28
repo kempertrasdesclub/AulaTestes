@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"test/aulaInterface/businessRules/user"
-	"test/aulaInterface/gin/endpoint/restful"
-	"test/aulaInterface/interfaces"
-	"test/aulaInterface/view/viewUser"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/businessRules/user"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/gin/endpoint/restful"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/view/viewUser"
 )
 
 type DataSource struct {

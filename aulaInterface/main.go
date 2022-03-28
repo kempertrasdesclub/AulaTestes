@@ -4,6 +4,8 @@ import (
 	"fmt"
 	builder "github.com/helmutkemper/iotmaker.docker.builder"
 	"github.com/helmutkemper/util"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/businessRules/system/managerDatasource"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/gin/server"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
@@ -11,8 +13,6 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
-	"test/aulaInterface/businessRules/system/managerDatasource"
-	"test/aulaInterface/gin/server"
 	"time"
 )
 

@@ -3,8 +3,8 @@ package managerDatasource
 import (
 	"errors"
 	"github.com/helmutkemper/util"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
 	"plugin"
-	"test/aulaInterface/interfaces"
 )
 
 // installUserByPlugin

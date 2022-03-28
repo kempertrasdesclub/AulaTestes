@@ -10,6 +10,6 @@ var User = MongoDBUser{}
 type MongoDBUser struct {
 	Client     *mongo.Client
 	Ctx        context.Context
-	CancalFunc context.CancelFunc
+	CancelFunc context.CancelFunc
 	ClientUser *mongo.Collection
 }

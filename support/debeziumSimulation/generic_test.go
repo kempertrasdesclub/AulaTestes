@@ -2,10 +2,11 @@ package debeziumSimulation
 
 import (
 	"github.com/helmutkemper/util"
+	"github.com/kempertrasdesclub/AulaTestes/chaosTest/dataTest"
+	"github.com/kempertrasdesclub/AulaTestes/support/messagingSystemNats"
+	"log"
 	"os"
 	"reflect"
-	"test/chaosTest/dataTest"
-	"test/support/messagingSystemNats"
 	"testing"
 	"time"
 )
@@ -38,7 +39,8 @@ func TestDebeziumSimulation_SetMessagingSystem(t *testing.T) {
 	err = debezium.Init(true, "db", "table")
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		log.Printf("error: %v", err.Error())
+		t.FailNow()
 	}
 }
 
@@ -51,6 +53,8 @@ func TestFile(t *testing.T) {
 
 	err = debeziumWriter.ToJSonFile("./data.test.json.txt")
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
@@ -58,18 +62,24 @@ func TestFile(t *testing.T) {
 	debeziumReader.SetData(&dTest)
 	err = debeziumReader.FromJSonFile("./data.test.json.txt")
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	var dataWriter = make(map[interface{}]FileLineFormat)
 	dataWriter, err = debeziumWriter.GetAllCreate()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	var dataReader = make(map[interface{}]FileLineFormat)
 	dataReader, err = debeziumReader.GetAllCreate()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
@@ -79,46 +89,64 @@ func TestFile(t *testing.T) {
 
 	for k := range dataWriter {
 		if reflect.DeepEqual(dataReader[k].Id, dataWriter[k].Id) == false {
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
 			t.FailNow()
 		}
 	}
 
 	dataWriter, err = debeziumWriter.GetAllUpdate()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	dataReader, err = debeziumReader.GetAllUpdate()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	if len(dataWriter) != len(dataReader) {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	for k := range dataWriter {
 		if reflect.DeepEqual(dataReader[k].Id, dataWriter[k].Id) == false {
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
 			t.FailNow()
 		}
 	}
 
 	dataWriter, err = debeziumWriter.GetAllDelete()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	dataReader, err = debeziumReader.GetAllDelete()
 	if err != nil {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	if len(dataWriter) != len(dataReader) {
+		util.TraceToLog()
+		log.Printf("error: %v", err.Error())
 		t.FailNow()
 	}
 
 	for k := range dataWriter {
 		if reflect.DeepEqual(dataReader[k].Id, dataWriter[k].Id) == false {
+			util.TraceToLog()
+			log.Printf("error: %v", err.Error())
 			t.FailNow()
 		}
 	}

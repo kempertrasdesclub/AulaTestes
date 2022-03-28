@@ -2,10 +2,10 @@ package user
 
 import (
 	"errors"
+	systemDatasource "github.com/kempertrasdesclub/AulaTestes/aulaInterface/businessRules/system/managerDatasource"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 	"log"
-	systemDatasource "test/aulaInterface/businessRules/system/managerDatasource"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
 )
 
 // getPasswordByEmail

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 )
 
 // populateInitialMenu (Português): popula o menu com os primeiros dados após a instalação.

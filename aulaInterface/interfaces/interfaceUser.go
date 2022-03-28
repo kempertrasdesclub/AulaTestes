@@ -1,6 +1,6 @@
 package interfaces
 
-import "test/aulaInterface/dataformat"
+import "github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 
 type InterfaceUser interface {
 	New() (referenceInitialized interface{}, err error)

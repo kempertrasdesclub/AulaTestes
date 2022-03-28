@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 )
 
 // GetByEmail (Português): Retorna o menu escolhido dentro do formato do datasource

@@ -2,8 +2,8 @@ package passwordHash
 
 import (
 	"errors"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 	"log"
-	"test/aulaInterface/constants"
 )
 
 func (e *Password) ruleLength(password []byte) (err error) {

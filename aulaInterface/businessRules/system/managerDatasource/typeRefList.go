@@ -1,7 +1,7 @@
 package managerDatasource
 
 import (
-	"test/aulaInterface/interfaces"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
 )
 
 // RefList

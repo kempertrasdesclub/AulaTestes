@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
 )
 
 func (e *MongoDBUser) GetAll() (users []dataformat.User, length int, err error) {

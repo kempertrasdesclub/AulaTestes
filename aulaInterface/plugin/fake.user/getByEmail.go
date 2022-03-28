@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/brianvoe/gofakeit/v6"
-	"test/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 )
 
 func (e *FakeUser) GetByEmail(mail string) (user dataformat.User, err error) {

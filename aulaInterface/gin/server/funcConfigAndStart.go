@@ -3,9 +3,9 @@ package server
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	endpointUser "github.com/kempertrasdesclub/AulaTestes/aulaInterface/gin/endpoint/user"
 	"log"
 	"net/http"
-	endpointUser "test/aulaInterface/gin/endpoint/user"
 )
 
 func ConfigAndStart() (err error) {

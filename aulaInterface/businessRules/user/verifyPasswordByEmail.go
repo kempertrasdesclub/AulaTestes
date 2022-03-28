@@ -3,8 +3,8 @@ package user
 import (
 	"encoding/base64"
 	"errors"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 	"log"
-	"test/aulaInterface/constants"
 )
 
 // VerifyPasswordByEmail

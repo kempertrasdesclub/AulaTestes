@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 )
 
 func (e *MongoDBUser) MailExists(mail string) (found bool, err error) {

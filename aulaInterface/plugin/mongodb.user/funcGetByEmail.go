@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 	"go.mongodb.org/mongo-driver/mongo"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
 )
 
 func (e *MongoDBUser) GetByEmail(mail string) (user dataformat.User, err error) {

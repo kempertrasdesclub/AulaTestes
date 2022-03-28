@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 )
 
 func (e *MongoDBUser) createTableUser() (err error) {

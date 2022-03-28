@@ -3,10 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 	"log"
 	"os"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
 )
 
 func ExampleSQLiteUser_GetByEmail() {

@@ -3,9 +3,9 @@ package user
 import (
 	"encoding/base64"
 	"errors"
+	systemDatasource "github.com/kempertrasdesclub/AulaTestes/aulaInterface/businessRules/system/managerDatasource"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 	"log"
-	systemDatasource "test/aulaInterface/businessRules/system/managerDatasource"
-	"test/aulaInterface/constants"
 )
 
 // Set

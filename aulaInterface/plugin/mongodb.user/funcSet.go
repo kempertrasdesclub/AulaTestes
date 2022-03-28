@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 )
 
 func (e *MongoDBUser) Set(id string, admin int, name, nickName, email, password string) (err error) {

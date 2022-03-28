@@ -1,6 +1,6 @@
 package user
 
-import "test/aulaInterface/interfaces"
+import "github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
 
 // BusinessRules
 //

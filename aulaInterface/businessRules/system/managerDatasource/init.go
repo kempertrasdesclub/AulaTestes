@@ -3,10 +3,10 @@ package managerDatasource
 import (
 	"errors"
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/constants"
-	jwtverify "test/aulaInterface/toModule/JWT"
-	"test/aulaInterface/toModule/passwordHash"
-	"test/aulaInterface/toModule/uID"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	jwtverify "github.com/kempertrasdesclub/AulaTestes/aulaInterface/toModule/JWT"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/toModule/passwordHash"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/toModule/uID"
 )
 
 // Init Inicializa o datasource escolhido

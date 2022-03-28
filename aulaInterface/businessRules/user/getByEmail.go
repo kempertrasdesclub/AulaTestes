@@ -2,11 +2,11 @@ package user
 
 import (
 	"errors"
+	systemDatasource "github.com/kempertrasdesclub/AulaTestes/aulaInterface/businessRules/system/managerDatasource"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/view/viewUser"
 	"log"
-	systemDatasource "test/aulaInterface/businessRules/system/managerDatasource"
-	"test/aulaInterface/constants"
-	"test/aulaInterface/dataformat"
-	"test/aulaInterface/view/viewUser"
 )
 
 // GetByEmail

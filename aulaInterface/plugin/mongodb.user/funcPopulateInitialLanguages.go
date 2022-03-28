@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/helmutkemper/util"
-	"test/aulaInterface/constants"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/constants"
 )
 
 func (e *MongoDBUser) populateInitialUser() (err error) {
