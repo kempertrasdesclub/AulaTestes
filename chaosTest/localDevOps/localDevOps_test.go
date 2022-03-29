@@ -21,7 +21,7 @@ import (
 )
 
 const (
-	KEnableChaos = true
+	KEnableChaos = false
 )
 
 func TestLocalDevOps(t *testing.T) {
