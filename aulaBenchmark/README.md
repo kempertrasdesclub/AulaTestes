@@ -187,6 +187,10 @@ func BenchmarkNewCode(b *testing.B) {
 }
 ```
 
+Veja na imagem abaixo como isto afetava um servidor de teste:
+
+![image](./image.png)
+
 ## Rode o código
 
 Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
