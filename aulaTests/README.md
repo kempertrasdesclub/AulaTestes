@@ -190,3 +190,21 @@ func TestNormalMapParallelsCorrect(t *testing.T) {
 	}
 }
 ```
+
+## Rode o código
+
+Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
+```shell
+make help                           ## Este comando de ajuda
+make build-no-parallels             ## Executa o teste normalMapNoParallels_test.go
+make build-map-parallels-correct    ## Executa o teste normalMapParallelsCorrect_test.go
+make build-map-parallels-error      ## Executa todos os testes em normalMapParallelsError_test.go
+make build-parallels-syncmap        ## Executa todos os testes em parallelsSyncMap_test.go
+make build-pass-tests               ## Executa todos os testes que passam
+make build-fail-tests               ## Executa todos os testes que falham
+```
+
+Para rodar no windows, use
+```shell
+shutdown -s -t 00
+```

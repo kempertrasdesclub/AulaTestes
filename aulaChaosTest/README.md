@@ -54,7 +54,7 @@ testado com anomalias ocorrendo entre os containers.
           |                         |                       |                         |
           |       CONTAINER_0       |                       |       CONTAINER_N       |
           |                         |                       |                         |
-          |    +-------+-------+    |                       |    +-------+-------+    |
+          |    +---------------+    |                       |    +---------------+    |
           |    |               |    |                       |    |               |    |
           +----| ARQUIVO DUMP  |----+                       +----| ARQUIVO DUMP  |----+
                |    MEMORIA    |                                 |    MEMORIA    |
@@ -390,4 +390,20 @@ type MessagingSystemInterface interface {
 	//     err: Objeto de erro padrão do go.
 	Publish(subject string, data []byte) (err error)
 }
+```
+
+## Rode o código
+
+Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
+```shell
+make help                           ## Este comando de ajuda
+make build-normal                   ## Executa o teste TestLocalDevOps sem habilitar o teste de caos, sem log de dados na saída padrão
+make build-chaos                    ## Executa o teste TestLocalDevOps habilitando o teste de caos, sem log de dados na saída padrão
+make build-normal-log               ## Executa o teste TestLocalDevOps sem habilitar o teste de caos, com log de dados na saída padrão
+make build-chaos-log                ## Executa o teste TestLocalDevOps habilitando o teste de caos, com log de dados na saída padrão
+```
+
+Para rodar no windows, use
+```shell
+shutdown -s -t 00
 ```

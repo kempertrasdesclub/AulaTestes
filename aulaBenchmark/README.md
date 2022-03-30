@@ -191,7 +191,8 @@ func BenchmarkNewCode(b *testing.B) {
 
 Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
 ```shell
-make build
+make help                           ## Este comando de ajuda
+make build                          ## Executa todos os testes em tcserver_test.go
 ```
 
 Para rodar no windows, use

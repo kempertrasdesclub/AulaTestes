@@ -290,7 +290,16 @@ abstrata e apresentar a ideia a outras pessoas.
 
 Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
 ```shell
-make build
+make help                           ## Este comando de ajuda
+make build-plugins                  ## Gera todos os plugins
+make build-plugin-user-mongodb      ## Gera o binário do plugin user mongodb
+make build-plugin-user-sqlite       ## Gera o binário do plugin user sqlite
+make build-plugin-user-fake         ## Gera o binário do plugin user fake
+make build-site                     ## Gera o binário do site
+make build                          ## Build completo
+make clean-sqlite                   ## Apaga o banco de dados SQLite
+make clean-binaries                 ## Limpa os arquivos binários
+make clean-all                      ## Limpa os arquivos de teste
 ```
 
 Para rodar no windows, use
