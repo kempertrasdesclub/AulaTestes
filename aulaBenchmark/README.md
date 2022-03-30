@@ -187,7 +187,7 @@ func BenchmarkNewCode(b *testing.B) {
 }
 ```
 
-Veja na imagem abaixo como isto afetava um servidor de teste:
+Veja na imagem abaixo como isto afetava um servidor de teste com poucos usuários:
 
 ![image](./image.png)
 
