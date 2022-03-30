@@ -70,7 +70,6 @@ func (e *DebeziumSimulation) Init(enableSaveData bool, dbName, tableName string)
 
 				e.actionSimulationEnd()
 				e.TerminationChan <- struct{}{}
-				log.Printf("-------------------------------------------------------------------------------------------------------------------------")
 
 				return
 

@@ -28,6 +28,13 @@ func TestLocalDevOps(t *testing.T) {
 	var err error
 	var netDocker *dockerBuilderNetwork.ContainerBuilderNetwork
 
+	t.Cleanup(
+		func() {
+			dockerBuilder.SaGarbageCollector()
+			// fixme, colocar a busca por arquivos e apagar
+		},
+	)
+
 	// Remove os elementos docker do teste anterior
 	dockerBuilder.SaGarbageCollector()
 
@@ -125,7 +132,7 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
-		log.Printf("nats: %s", data)
+		//log.Printf("nats: %s", data)
 		return
 	})
 	if err != nil {
