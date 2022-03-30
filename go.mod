@@ -3,13 +3,9 @@ module github.com/kempertrasdesclub/AulaTestes
 go 1.15
 
 require (
-	github.com/allegro/bigcache/v3 v3.0.2
-	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d
 	github.com/brianvoe/gofakeit/v6 v6.15.0
-	github.com/dgraph-io/ristretto v0.1.0
 	github.com/gbrlsnchs/jwt/v3 v3.0.1
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/uuid v1.3.0
 	github.com/helmutkemper/iotmaker.docker.builder v1.0.16
 	github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210517125645-e0b15cc3b594

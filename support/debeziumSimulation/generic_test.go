@@ -2,7 +2,7 @@ package debeziumSimulation
 
 import (
 	"github.com/helmutkemper/util"
-	"github.com/kempertrasdesclub/AulaTestes/chaosTest/dataTest"
+	"github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/dataTest"
 	"github.com/kempertrasdesclub/AulaTestes/support/messagingSystemNats"
 	"log"
 	"os"
