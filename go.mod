@@ -11,7 +11,7 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/uuid v1.3.0
-	github.com/helmutkemper/iotmaker.docker.builder v0.9.51
+	github.com/helmutkemper/iotmaker.docker.builder v1.0.16
 	github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210517125645-e0b15cc3b594
 	github.com/helmutkemper/util v1.0.3
 	github.com/mattn/go-sqlite3 v1.14.12
