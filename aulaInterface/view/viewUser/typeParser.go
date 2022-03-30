@@ -1,7 +1,7 @@
 package viewUser
 
 import (
-	"test/aulaInterface/dataformat"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
 )
 
 func (e *User) Parser(user *dataformat.User) {
