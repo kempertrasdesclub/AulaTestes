@@ -4,6 +4,7 @@ import (
 	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
 	dockerBuilderNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	"github.com/helmutkemper/util"
+	"io/ioutil"
 	"log"
 	"strconv"
 	"time"
@@ -18,6 +19,11 @@ func dockerSimulationInstall(
 ) (
 	err error,
 ) {
+
+	d, _ := ioutil.ReadDir(".")
+	for _, v := range d {
+		log.Printf("%v", v.Name())
+	}
 
 	var indexAsString = strconv.FormatInt(index, 10)
 
@@ -36,7 +42,7 @@ func dockerSimulationInstall(
 	// Define o nome do container
 	simulation.SetContainerName("container_delete_after_test_" + indexAsString)
 	// Define o caminho da pasta contando o projeto
-	simulation.SetBuildFolderPath("../chaosTest/toContainer")
+	simulation.SetBuildFolderPath("../toContainer")
 	// Gera o Dockerfile de forma automática
 	simulation.MakeDefaultDockerfileForMe()
 	// Define os repositórios da TC como sendo privados
@@ -61,7 +67,7 @@ func dockerSimulationInstall(
 	// Algumas falhas críticas podem ser monitoradas e quando elas acontecem, a saída padrão do container é arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
 	err = simulation.AddFailMatchFlagToFileLog(
 		"bug:",
-		"../chaosTest/bug",
+		"../bug",
 	)
 	if err != nil {
 		util.TraceToLog()
@@ -74,7 +80,7 @@ func dockerSimulationInstall(
 	// Algumas falhas críticas podem ser monitoradas e quando elas acontecem, a saída padrão do container é arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
 	err = simulation.AddFailMatchFlagToFileLog(
 		"panic:",
-		"../chaosTest/bug",
+		"../bug",
 	)
 	if err != nil {
 		util.TraceToLog()

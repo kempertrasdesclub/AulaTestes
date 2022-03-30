@@ -14,9 +14,34 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-.PHONY: build
-## Executa todos os testes em tcserver_test.go
-build:
+.PHONY: build-normal
+## Executa o teste TestLocalDevOps sem habilitar o teste de caos, sem log de dados na saída padrão
+build-normal:
+	@rm -rf ./localDevOps/memory
 	@$(GO) mod tidy
 	@$(GO) clean -testcache
-	@$(GO) test github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/localDevOps -test.v -test.paniconexit0 -test.run TestLocalDevOps
+	@CHAOS_TEST=0 LOG=0 $(GO) test github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/localDevOps -test.v -test.paniconexit0 -test.run TestLocalDevOps
+
+.PHONY: build-chaos
+## Executa o teste TestLocalDevOps habilitando o teste de caos, sem log de dados na saída padrão
+build-chaos:
+	@rm -rf ./localDevOps/memory
+	@$(GO) mod tidy
+	@$(GO) clean -testcache
+	@CHAOS_TEST=1 LOG=0 $(GO) test github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/localDevOps -test.v -test.paniconexit0 -test.run TestLocalDevOps
+
+.PHONY: build-normal-log
+## Executa o teste TestLocalDevOps sem habilitar o teste de caos, com log de dados na saída padrão
+build-normal-log:
+	@rm -rf ./localDevOps/memory
+	@$(GO) mod tidy
+	@$(GO) clean -testcache
+	@CHAOS_TEST=0 LOG=1 $(GO) test github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/localDevOps -test.v -test.paniconexit0 -test.run TestLocalDevOps
+
+.PHONY: build-chaos-log
+## Executa o teste TestLocalDevOps habilitando o teste de caos, com log de dados na saída padrão
+build-chaos-log:
+	@rm -rf ./localDevOps/memory
+	@$(GO) mod tidy
+	@$(GO) clean -testcache
+	@CHAOS_TEST=1 LOG=1 $(GO) test github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/localDevOps -test.v -test.paniconexit0 -test.run TestLocalDevOps

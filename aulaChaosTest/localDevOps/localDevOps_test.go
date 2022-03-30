@@ -20,18 +20,16 @@ import (
 	"time"
 )
 
-const (
-	KEnableChaos = false
-)
-
 func TestLocalDevOps(t *testing.T) {
 	var err error
 	var netDocker *dockerBuilderNetwork.ContainerBuilderNetwork
 
+	var enableChaos = os.Getenv("CHAOS_TEST") == "1"
+	var showLog = os.Getenv("LOG") == "1"
+
 	t.Cleanup(
 		func() {
 			dockerBuilder.SaGarbageCollector()
-			// fixme, colocar a busca por arquivos e apagar
 		},
 	)
 
@@ -80,7 +78,7 @@ func TestLocalDevOps(t *testing.T) {
 
 		var suffix = strconv.FormatInt(i, 10)
 
-		var memoryPath = "./localDevOps/memory/container_" + suffix
+		var memoryPath = "../localDevOps/memory/container_" + suffix
 		_ = os.MkdirAll(memoryPath, fs.ModePerm)
 
 		var fileInfo fs.FileInfo
@@ -98,7 +96,7 @@ func TestLocalDevOps(t *testing.T) {
 			t.FailNow()
 		}
 
-		err = dockerSimulationInstall(netDocker, simulation[i], i, memoryPath, KEnableChaos)
+		err = dockerSimulationInstall(netDocker, simulation[i], i, memoryPath, enableChaos)
 		if err != nil {
 			util.TraceToLog()
 			log.Printf("error: %v", err.Error())
@@ -132,7 +130,10 @@ func TestLocalDevOps(t *testing.T) {
 	}
 
 	err = messageSystem.Subscribe("stocksMessage", func(subject string, data []byte) (err error) {
-		//log.Printf("nats: %s", data)
+		if showLog == true {
+			log.Printf("nats: %s", data)
+		}
+
 		return
 	})
 	if err != nil {
@@ -181,7 +182,7 @@ func TestLocalDevOps(t *testing.T) {
 
 	for i := int64(0); i != 2; i += 1 {
 		var suffix = strconv.FormatInt(i, 10)
-		var memoryPath = "./localDevOps/memory/container_" + suffix
+		var memoryPath = "../localDevOps/memory/container_" + suffix
 
 		for {
 			_, err = os.Stat(memoryPath + "/data.file.json")
