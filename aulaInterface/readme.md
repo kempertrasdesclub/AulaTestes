@@ -68,7 +68,7 @@ quando o projeto muda.
 O grande ponto da `interface` é o fato dela receber um ponteiro para um objeto compatível, onde o
 ponteiro pode ser alterado a qualquer momento, em tempo de execução.
 
-Imagine um `MVP`, um produto mínimo viável, onde o pessoal de frontend necessita começar a trabalhar
+Imagine um `MVP`, um produto mínimo viável, onde o pessoal de Front-end necessita começar a trabalhar
 o mais rápido possível, o seu gestor necessita apresentar algo a direção da empresa e você necessita 
 fazer um projeto descente para ter sossego e curtir a vida.
 
@@ -208,20 +208,10 @@ vida quando resolver o problema em um código que você nem lembrava mais da sua
 Por isto, lembre-se, comente seus códigos para você com alzheimer, pois, você esquecerá tudo que 
 programou.
 
-## Exemplo real
+## Ganhe tempo com dados falsos
 
-Imagine a seguinte situação:
-
-  * O pessoal de Front-end necessita começar a trabalhar;
-  * O PO necessita discutir o produto com o cliente ou a diretoria e necessita de um MVP para mostrar;
-  * Você necessita ganhar tempo para viver.
-
-Agora imagine que vamos fazer o módulo `User`.
-
-Em vez de você sair fazendo logo fazendo um objeto, apenas imagine as funções públicas necessárias do 
-módulo e monte uma interface.
-
-Essas são as funções públicas necessárias:
+No nosso caso, existe uma interface `User` e o pessoal do Front-end necessita receber dados para 
+começar montar as telas.
 
 ```go
 package interfaces
@@ -239,21 +229,7 @@ type InterfaceUser interface {
 }
 ```
 
-Configure `User` para poder rodar com uma interface
-
-```go
-package managerDatasource
-
-import (
-	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
-)
-
-type RefList struct {
-	User     interfaces.InterfaceUser     `json:"-"`
-}
-```
-
-Em seguida, comece pelo mais fácil e monte os dados falsos para o pessoal de Front-end, assim:
+Monte um objeto `userFake` em poucos minutos, como no exemplo abaixo.
 
 ```go
 package userFake
@@ -306,29 +282,9 @@ func (e *FakeUser) Close() (err error) {
 }
 ```
 
-Uma vez feito isto, basta montar a regra de negócios de `User` assim:
-
-````go
-package managerDatasource
-
-import (
-	"log"
-	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
-)
-
-type RefList struct {
-	User     interfaces.InterfaceUser     `json:"-"`
-}
-
-func testandoUser() {
-	var user = FakeUser{}
-	var refList = RefList{}
-	refList.User = &user
-	
-	fakeData, _ := refList.User.GetByEmail("dino.sauro@pangea.com")
-	log.Printf("%+v", fakeData)
-}
-````
+Uma vez feito isto, basta montar a regra de negócios de `User`, assim, tanto o pessoal de Front-end 
+pode começar a montar telas, como o PO do projeto pode começar vê o projeto de uma forma menos 
+abstrata e apresentar a ideia a outras pessoas.
 
 ## Rode o código
 
