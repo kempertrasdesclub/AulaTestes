@@ -12,8 +12,8 @@ funções públicas necessárias para o código.
 Por exemplo:
 ```go
 type InterfaceUser interface {
-	SetName(name string)
-	SetMail(mail string)
+  SetName(name string)
+  SetMail(mail string)
 }
 ```
 
@@ -22,16 +22,16 @@ as funções `SetName(string)` e `SetMail(string)` implementadas, como no exempl
 
 ```go
 type User struct {
-	name string
-	mail string
+  name string
+  mail string
 }
 
 func(e *User) SetName(name string) {
-	e.name = name
+  e.name = name
 }
 
 func(e *User) SetMail(mail string) {
-	e.mail = mail
+  e.mail = mail
 }
 ```
 
@@ -40,21 +40,21 @@ Por exemplo:
 package main
 
 type InterfaceUser interface {
-	SetName(name string)
-	SetMail(mail string)
+  SetName(name string)
+  SetMail(mail string)
 }
 
 type User struct {
-	name string
-	mail string
+  name string
+  mail string
 }
 
 func (e *User) SetName(name string) {
-	e.name = name
+  e.name = name
 }
 
 func (e *User) SetMail(mail string) {
-	e.mail = mail
+  e.mail = mail
 }
 
 var user InterfaceUser = &User{}
@@ -79,7 +79,7 @@ do código, ou um binário externo, carregável em tempo de execução. Quase um
 
 ## Explicação do código
 
-O código de exemplo foi tirado do meu um código maior, site pessoal. 
+O código de exemplo foi tirado de um código maior, meu site pessoal. 
 
 Arquivo `aulaInterface/main.go`
 
@@ -90,10 +90,10 @@ Nesse caso, o objeto `RefList` recebe as interfaces para os ponteiros do módulo
 
 ```go
 type RefList struct {
-	User     interfaces.InterfaceUser     `json:"-"`
-	Password interfaces.InterfacePassword `json:"-"`
-	UniqueID interfaces.InterfaceUID      `json:"-"`
-	Jwt      interfaces.InterfaceJWT      `json:"-"`
+  User     interfaces.InterfaceUser     `json:"-"`
+  Password interfaces.InterfacePassword `json:"-"`
+  UniqueID interfaces.InterfaceUID      `json:"-"`
+  Jwt      interfaces.InterfaceJWT      `json:"-"`
 }
 ```
 
@@ -124,7 +124,7 @@ Imagine uma interface simples:
 package interfaces
 
 type InterfacePrint interface {
-	Print()
+  Print()
 }
 ```
 
@@ -140,7 +140,7 @@ var SelectedLanguage PrintPtBr
 type PrintPtBr struct{}
 
 func (e PrintPtBr) Print() {
-	fmt.Println("Olá Mundo!")
+  fmt.Println("Olá Mundo!")
 }
 ```
 
@@ -156,39 +156,39 @@ Para carregar o plugin externo no código basta colocar o código abaixo
 package main
 
 import (
-	"errors"
-	"plugin"
+  "errors"
+  "plugin"
 )
 
 func main() {
-	var err error
-	var ok bool
-	var printHello *plugin.Plugin
-	var userSymbol plugin.Symbol
-	var language interfaces.InterfacePrint
-	
-	// Carrega o binário externo
-	printHello, err = plugin.Open("./print.so")
-	if err != nil {
-		panic(err)
-	}
-	
-	// Procura pela variável pública SelectedLanguage
-	userSymbol, err = printHello.Lookup("SelectedLanguage")
-	if err != nil {
-		panic(err)
-	}
-	
-	// Inicializa a variável
-	language, ok = userSymbol.(interfaces.InterfacePrint)
-	if ok == false {
-		err = errors.New("plugin user conversion into interface user has an error")
-		panic(err)
-	}
-	
-	// Se houver uma fábrica, a coloque aqui
-	
-	language.Print()
+  var err error
+  var ok bool
+  var printHello *plugin.Plugin
+  var userSymbol plugin.Symbol
+  var language interfaces.InterfacePrint
+  
+  // Carrega o binário externo
+  printHello, err = plugin.Open("./print.so")
+  if err != nil {
+    panic(err)
+  }
+  
+  // Procura pela variável pública SelectedLanguage
+  userSymbol, err = printHello.Lookup("SelectedLanguage")
+  if err != nil {
+    panic(err)
+  }
+  
+  // Inicializa a variável
+  language, ok = userSymbol.(interfaces.InterfacePrint)
+  if ok == false {
+    err = errors.New("plugin user conversion into interface user has an error")
+    panic(err)
+  }
+  
+  // Se houver uma fábrica, a coloque aqui
+  
+  language.Print()
 }
 ```
 
@@ -207,6 +207,128 @@ vida quando resolver o problema em um código que você nem lembrava mais da sua
 
 Por isto, lembre-se, comente seus códigos para você com alzheimer, pois, você esquecerá tudo que 
 programou.
+
+## Exemplo real
+
+Imagine a seguinte situação:
+
+  * O pessoal de Front-end necessita começar a trabalhar;
+  * O PO necessita discutir o produto com o cliente ou a diretoria e necessita de um MVP para mostrar;
+  * Você necessita ganhar tempo para viver.
+
+Agora imagine que vamos fazer o módulo `User`.
+
+Em vez de você sair fazendo logo fazendo um objeto, apenas imagine as funções públicas necessárias do 
+módulo e monte uma interface.
+
+Essas são as funções públicas necessárias:
+
+```go
+package interfaces
+
+import "github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
+
+type InterfaceUser interface {
+	New() (referenceInitialized interface{}, err error)
+	Connect(connectionString string, args ...interface{}) (err error)
+	Close() (err error)
+	Install() (err error)
+	GetByEmail(mail string) (user dataformat.User, err error)
+	Set(id string, admin int, name, nickName, email, password string) (err error)
+	MailExists(mail string) (found bool, err error)
+}
+```
+
+Configure `User` para poder rodar com uma interface
+
+```go
+package managerDatasource
+
+import (
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
+)
+
+type RefList struct {
+	User     interfaces.InterfaceUser     `json:"-"`
+}
+```
+
+Em seguida, comece pelo mais fácil e monte os dados falsos para o pessoal de Front-end, assim:
+
+```go
+package userFake
+
+import (
+	"github.com/brianvoe/gofakeit/v6"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/dataformat"
+)
+
+type FakeUser struct{}
+
+func (e *FakeUser) Set(id string, admin int, name, nickName, email, password string) (err error) {
+	return
+}
+
+func (e *FakeUser) New() (referenceInitialized interface{}, err error) {
+	return e, nil
+}
+
+func (e *FakeUser) MailExists(mail string) (found bool, err error) {
+	found = true
+	return
+}
+
+func (e *FakeUser) Install() (err error) {
+	return
+}
+
+func (e *FakeUser) GetByEmail(mail string) (user dataformat.User, err error) {
+	var nameFirst = gofakeit.FirstName()
+	var nameLast = gofakeit.LastName()
+	user = dataformat.User{
+		Id:       gofakeit.UUID(),
+		Admin:    gofakeit.RandomInt([]int{0, 1}),
+		Name:     nameFirst + " " + nameLast,
+		NickName: nameFirst + "." + nameLast,
+		Mail:     nameFirst + "." + nameLast + "@company.com",
+		Password: "**********",
+	}
+	
+	return
+}
+
+func (e *FakeUser) Connect(connectionString string, args ...interface{}) (err error) {
+	return
+}
+
+func (e *FakeUser) Close() (err error) {
+	return
+}
+```
+
+Uma vez feito isto, basta montar a regra de negócios de `User` assim:
+
+````go
+package managerDatasource
+
+import (
+	"log"
+	"github.com/kempertrasdesclub/AulaTestes/aulaInterface/interfaces"
+)
+
+type RefList struct {
+	User     interfaces.InterfaceUser     `json:"-"`
+}
+
+func testandoUser() {
+	var user = FakeUser{}
+	var refList = RefList{}
+	refList.User = &user
+	
+	fakeData, _ := refList.User.GetByEmail("dino.sauro@pangea.com")
+	log.Printf("%+v", fakeData)
+}
+````
 
 ## Rode o código
 

