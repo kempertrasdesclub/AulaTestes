@@ -7,7 +7,7 @@ import (
 	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
 	dockerBuilderNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	"github.com/helmutkemper/util"
-	"github.com/kempertrasdesclub/AulaTestes/chaosTest/dataTest"
+	"github.com/kempertrasdesclub/AulaTestes/aulaChaosTest/dataTest"
 	"github.com/kempertrasdesclub/AulaTestes/support/debeziumSimulation"
 	"github.com/kempertrasdesclub/AulaTestes/support/messagingSystemNats"
 	"io/fs"
