@@ -98,6 +98,8 @@ func dockerSimulationInstall(
 		"",
 	)
 
+	simulation.AddRestartMatchFlag("you can restart now")
+
 	// English: Defines the probability of the container restarting and changing the IP address in the process.
 	//
 	// Português: Define a probalidade do container reiniciar e mudar o endereço IP no processo.
@@ -106,7 +108,7 @@ func dockerSimulationInstall(
 	// English: Defines a time window used to start chaos testing after container initialized
 	//
 	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
-	simulation.SetTimeToStartChaosOnChaosScene(60*time.Second, 90*time.Second)
+	simulation.SetTimeToStartChaosOnChaosScene(5*time.Second, 10*time.Second)
 
 	// English: Sets a time window used to release container restart after the container has been initialized
 	//

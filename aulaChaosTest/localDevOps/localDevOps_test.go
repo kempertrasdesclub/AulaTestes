@@ -151,7 +151,7 @@ func TestLocalDevOps(t *testing.T) {
 		500*time.Millisecond,
 		700*time.Millisecond,
 		1000*time.Millisecond,
-		2*60*time.Second,
+		30*time.Second,
 	)
 
 	err = debezium.Init(true, "tradersclub", "simulation")

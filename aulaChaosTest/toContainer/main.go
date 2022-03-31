@@ -136,6 +136,10 @@ func main() {
 	}
 
 	log.Print("chaos enable")
+	go func() {
+		time.Sleep(20 * time.Second)
+		log.Print("you can restart now")
+	}()
 
 	<-endOfDataStream
 	log.Printf("endOfDataStream")
